@@ -9,6 +9,7 @@ import {
   DECREASE_QUANTITY,
   SAVE_SLIDER_PRODUCTS,
   SAVE_PRODUCTITEM_SLIDER,
+  SAVE_SEARCH_RESULT,
 } from "./actions";
 import { productInitalState } from "../redux/initialState";
 
@@ -17,6 +18,7 @@ const defaultState: GlobalState = {
   cartItems: [],
   slider: [],
   productItemSlider: [],
+  searchResult: [],
   product: productInitalState,
   page: 1, // Add the page state property
   totalProducts: 0, // Add the totalProducts state property
@@ -24,13 +26,22 @@ const defaultState: GlobalState = {
 
 const homeReducer = (state = defaultState, action: ACTIONS) => {
   switch (action.type) {
+    // case SAVE_PRODUCTS:
+    // return { ...state, products: action.products };
     case SAVE_PRODUCTS:
-      return { ...state, products: action.products };
+      const existingIds = state.products.map((product) => product.id);
+      const newProducts = action.products.filter(
+        (product) => !existingIds.includes(product.id)
+      );
+      return { ...state, products: [...state.products, ...newProducts] };
+
     // return { ...state, products: [...state.products, ...action.products] };
     case SAVE_SLIDER_PRODUCTS:
       return { ...state, slider: action.slider };
     case SAVE_PRODUCTITEM_SLIDER:
       return { ...state, productItemSlider: action.productItemSlider };
+    case SAVE_SEARCH_RESULT:
+      return { ...state, searchResult: action.searchResult };
     case SAVE_PRODUCT:
       return { ...state, product: action.product };
     case SET_PAGE: // Handle the new action

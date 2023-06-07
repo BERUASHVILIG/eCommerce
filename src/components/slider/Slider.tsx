@@ -4,13 +4,15 @@ import { loadSliderProducts } from "../../utils/ajax";
 import { saveSliderProducts } from "../../pages/Home/redux/actions";
 import { Link } from "react-router-dom";
 
-import SwiperCore, { Navigation, Autoplay } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper.min.css";
+import "./Slider.scss";
 
-SwiperCore.use([Navigation, Autoplay]);
+import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
-const Slider = () => {
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const Sliderr = () => {
   const dispatch = useAppDispatch();
   const { slider }: GlobalState = useAppSelector((state) => state.homeReducer);
 
@@ -19,7 +21,6 @@ const Slider = () => {
       try {
         const { data } = await loadSliderProducts();
         dispatch(saveSliderProducts(data.products));
-        console.log("slider", saveSliderProducts(data.products));
       } catch (error) {
         console.log("err", error);
       }
@@ -28,34 +29,50 @@ const Slider = () => {
     fetchSliderProducts();
   }, []);
 
+  const PreviousBtn = (props: any) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <ArrowBackIos className="arrow-back" />
+      </div>
+    );
+  };
+
+  const NextBtn = (props: any) => {
+    const { className, onClick } = props;
+    return (
+      <div className={className} onClick={onClick}>
+        <ArrowForwardIos className="arrow-next" />
+      </div>
+    );
+  };
+
   return (
-    <div>
-      <Swiper
-        style={{ height: "300px", backgroundColor: "#5cccc5" }}
-        slidesPerView={1}
-        navigation
-        autoplay={{ delay: 3000 }}
+    <div className="slider-container">
+      <Slider
+        autoplay
+        autoplaySpeed={3000}
+        // dots
+        initialSlide={2}
+        infinite
+        prevArrow={<PreviousBtn />}
+        nextArrow={<NextBtn />}
       >
-        {slider.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <Link to={`/productdetail/${slide.id}`}>
+        {slider.map((slide) => {
+          return (
+            <Link key={slide.id} to={`productdetail/${slide.id}`}>
               <img
-                style={{
-                  width: "157px",
-                  height: "157px",
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "auto",
-                }}
+                className="slider-image"
+                key={slide.id}
                 src={slide.images[0]}
-                alt={`Product Image ${index + 1}`}
+                alt={slide.brand}
               />
             </Link>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+          );
+        })}
+      </Slider>
     </div>
   );
 };
 
-export default Slider;
+export default Sliderr;
