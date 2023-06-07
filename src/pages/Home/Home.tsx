@@ -3,9 +3,11 @@ import { saveProducts, setPage, setTotalProducts } from "./redux/actions";
 import { getAllProducts } from "../../utils/ajax";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ProductCard from "../../components/productCard";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import BreadCrumbs from "../../components/breadCrumbs";
-import Slider from "../../components/slider";
+import Sliderr from "../../components/slider";
+
+import "./Home.scss";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -17,11 +19,8 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         const { data } = await getAllProducts(page);
-        console.log({ data });
-        dispatch(saveProducts([...products, ...data.products]));
+        dispatch(saveProducts(data.products));
         dispatch(setTotalProducts(data.total_found));
-        console.log("empty", setTotalProducts(data.total_found));
-        console.log("data", data);
       } catch (error) {
         console.log("err", error);
       }
@@ -30,26 +29,25 @@ const Home = () => {
     fetchProducts();
   }, [page]);
 
-  const handleLoadMore = () => {
+  const handleLoadMore = async () => {
     if (products.length < totalProducts) {
-      dispatch(setPage(page + 10));
+      const newPage = page + 10;
+      try {
+        const { data } = await getAllProducts(newPage);
+        dispatch(saveProducts(data.products));
+        dispatch(setTotalProducts(data.total_found));
+        dispatch(setPage(newPage));
+      } catch (error) {
+        console.log("err", error);
+      }
     }
   };
 
   return (
     <Box>
-      <Slider />
-      <Box
-        sx={{
-          display: "grid",
-          alignItems: "center",
-          justifyContent: "center",
-          margin: "20px auto",
-          gap: "30px",
-          width: "80%",
-          gridTemplateColumns: "repeat(5,250px)",
-        }}
-      >
+      <Sliderr />
+      <Typography>Hot Offers</Typography>
+      <Box className="products-container">
         {products.map((product) => {
           return <ProductCard key={product.id} product={product} />;
         })}

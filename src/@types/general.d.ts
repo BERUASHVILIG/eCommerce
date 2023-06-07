@@ -3,6 +3,7 @@ type GlobalState = {
   product: ProductItem;
   cartItems: CartItem[];
   slider: ProductItem[];
+  searchResult: ProductItem[];
   productItemSlider: ProductItem[];
   page: number;
   totalProducts: number;

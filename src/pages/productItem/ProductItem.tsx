@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleProduct } from "../../utils/ajax";
-import { saveProduct } from "../Home/redux/actions";
+import { saveProduct, updateCart } from "../Home/redux/actions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
-import { Box, Typography, Paper, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Paper,
+  Button,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import ProductItemSlider from "../../components/productItemSlider";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const ProductItem = () => {
   const dispatch = useAppDispatch();
@@ -13,9 +22,11 @@ const ProductItem = () => {
   const { id } = useParams();
   const { product }: GlobalState = useAppSelector((state) => state.homeReducer);
 
-  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const handleAddToCart = () => {
+    dispatch(updateCart(product, 1)); // Adjust the quantity as needed
+  };
 
-  console.log("i am pro", product);
+  const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
 
   const handleBackHome = () => {
     navigate("/");
@@ -29,10 +40,7 @@ const ProductItem = () => {
     const fetchSingleProduct = async () => {
       try {
         const { data } = await getSingleProduct(`${id}`);
-        console.log("one data", data);
-        console.log({ data });
         dispatch(saveProduct(data));
-        console.log("save product", saveProduct(data.product));
       } catch (error) {
         console.log("err", error);
       }
@@ -66,6 +74,17 @@ const ProductItem = () => {
               <Typography>
                 {parseFloat(product?.price.toString()).toFixed(2)}₾
               </Typography>
+              <Button onClick={handleAddToCart}>Add to cart</Button>
+              <Accordion sx={{ mt: 3, ml: 10 }}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>Description</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography sx={{ fontSize: "12px" }}>
+                    {product?.description}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
             </Box>
           </Box>
           <Box
@@ -93,10 +112,10 @@ const ProductItem = () => {
               </Paper>
             ))}
           </Box>
-          <Typography>Description: {product?.description}</Typography>
+          {/* <Typography>Description: {product?.description}</Typography> */}
         </Box>
       </Paper>
-      <ProductItemSlider brand={product.brand} />
+      <ProductItemSlider title={product.title} />
     </Box>
   );
 };

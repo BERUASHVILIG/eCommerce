@@ -17,16 +17,23 @@ export const getAllProducts = (page: number) =>
 
 export const loadSliderProducts = () =>
   loadAllProducts.post("/products", {
-    keyword: "nokia",
+    keyword: "",
     page_size: 10,
     page_number: 0,
   });
 
-export const loadProductItemSlider = (brand: string) =>
+export const loadProductItemSlider = (title: string) =>
   loadAllProducts.post("/products", {
-    keyword: brand,
-    page_size: 15,
+    keyword: title,
+    page_size: 10,
     page_number: 1,
+  });
+
+export const loadSearchResult = (value: string) =>
+  loadAllProducts.post("/products", {
+    keyword: value,
+    page_size: 5,
+    page_number: 0,
   });
 
 export const getSingleProduct = (id: string) =>

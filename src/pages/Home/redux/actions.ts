@@ -1,3 +1,4 @@
+import { Exception } from "sass";
 import ProductItem from "../../productItem";
 import {
   ACTIONS,
@@ -10,6 +11,7 @@ import {
   DECREASE_QUANTITY_ACTION,
   SAVE_SLIDER_PRODUCTS_ACTION,
   SAVE_PRODUCTITEM_SLIDER_ACTION,
+  SAVE_SEARCH_RESULT_ACTION,
 } from "../redux/actionTypes";
 
 export const SAVE_PRODUCTS = "SAVE_PRODUCTS";
@@ -21,6 +23,7 @@ export const INCREASE_QUANTITY = "INCREASE_QUANTITY";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const SAVE_SLIDER_PRODUCTS = "SAVE_SLIDER_PRODUCTS";
 export const SAVE_PRODUCTITEM_SLIDER = "SAVE_PRODUCTITEM_SLIDER";
+export const SAVE_SEARCH_RESULT = "SEARCH_RESULT";
 
 export const saveProducts = (
   products: ProductItem[]
@@ -41,6 +44,13 @@ export const saveProductItemSlider = (
 ): SAVE_PRODUCTITEM_SLIDER_ACTION => ({
   type: SAVE_PRODUCTITEM_SLIDER,
   productItemSlider,
+});
+
+export const saveSearchResult = (
+  searchResult: ProductItem[]
+): SAVE_SEARCH_RESULT_ACTION => ({
+  type: SAVE_SEARCH_RESULT,
+  searchResult,
 });
 
 export const saveProduct = (product: ProductItem): SAVE_PRODUCT_ACTION => ({

@@ -1,0 +1,41 @@
+.slider-container {
+  width: 90%;
+  margin: auto;
+}
+.slider-image {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 300px;
+}
+.arrow-next,
+.arrow-back {
+  color: white;
+  background-color: black;
+  font-size: 30px;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.arrow-next:hover,
+.arrow-back:hover {
+  color: black;
+  background-color: orange;
+  padding: 5px;
+  border-radius: 8px;
+  scale: 1.5;
+}
+
+@media (max-width: 768px) {
+  .slider-container {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 408px) {
+  .slider-container {
+    width: 100%;
+    padding: 0 40px;
+  }
+}
