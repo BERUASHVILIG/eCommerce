@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ProductItemSlider from "../../components/productItemSlider";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { red } from "@mui/material/colors";
 
 const ProductItem = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +28,11 @@ const ProductItem = () => {
   };
 
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [color, setColor] = useState<string>("");
+
+  const handleChangeColor = (selectedColor: string) => {
+    setColor(selectedColor);
+  };
 
   const handleBackHome = () => {
     navigate("/");
@@ -57,7 +63,14 @@ const ProductItem = () => {
           </Button>
           <Box sx={{ display: "flex", justifyContent: "flex-start", p: 3 }}>
             {product && (
-              <Paper elevation={3} square sx={{ p: 1 }}>
+              <Paper
+                elevation={3}
+                square
+                sx={{
+                  backgroundColor: color || "#fff",
+                  p: 1,
+                }}
+              >
                 <img
                   src={product.images[activeImageIndex]}
                   alt=""
@@ -75,6 +88,15 @@ const ProductItem = () => {
                 {parseFloat(product?.price.toString()).toFixed(2)}₾
               </Typography>
               <Button onClick={handleAddToCart}>Add to cart</Button>
+              <Box>
+                <Button onClick={() => handleChangeColor("black")}>
+                  black
+                </Button>
+                <Button onClick={() => handleChangeColor("green")}>
+                  green
+                </Button>
+                <Button onClick={() => handleChangeColor("red")}>red</Button>
+              </Box>
               <Accordion sx={{ mt: 3, ml: 10 }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>Description</Typography>

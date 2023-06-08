@@ -50,7 +50,13 @@ const Cart = () => {
             cartItems.map((item: CartItem) => {
               if (item.quantity > 0) {
                 const totalPrice = item.product.price * item.quantity;
-                return <CartItemCard item={item} totalPrice={totalPrice} />;
+                return (
+                  <CartItemCard
+                    key={item.product.id}
+                    item={item}
+                    totalPrice={totalPrice}
+                  />
+                );
               }
               return null;
             })

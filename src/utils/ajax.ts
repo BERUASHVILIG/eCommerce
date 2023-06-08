@@ -15,6 +15,13 @@ export const getAllProducts = (page: number) =>
     page_number: page,
   });
 
+// export const getAllProductsAdmin = (page: number) =>
+//   loadAllProducts.post("/products", {
+//     keyword: "",
+//     page_size: 10,
+//     page_number: page,
+//   });
+
 export const loadSliderProducts = () =>
   loadAllProducts.post("/products", {
     keyword: "",
@@ -34,6 +41,16 @@ export const loadSearchResult = (value: string) =>
     keyword: value,
     page_size: 5,
     page_number: 0,
+  });
+
+export const sentAddedProduct = () =>
+  loadAllProducts.post("/product", {
+    title: "",
+    description: "",
+    images: [],
+    brand: "",
+    category: "",
+    price: "",
   });
 
 export const getSingleProduct = (id: string) =>
