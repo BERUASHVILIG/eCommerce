@@ -19,6 +19,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
+import { deleteProduct, editProduct } from "./redux/actions";
+import { isUserAuthenticated } from "../utils/auth";
+import EditProduct from "./editProduct";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,7 +37,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   "&:last-child td, &:last-child th": {
     border: 0,
   },
@@ -43,14 +45,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const Admin = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { products, page, totalProducts }: GlobalState = useAppSelector(
-    (state) => state.homeReducer
-  );
+  const { products, page, totalProducts, product }: GlobalState =
+    useAppSelector((state) => state.homeReducer);
 
-  const [showAddProduct, setShowAddProduct] = useState(false);
+  // useEffect(() => {
+  //   if (!isUserAuthenticated()) navigate("/login");
+  //   // if (isUserAuthenticated()) {
+  //   //   window.location.href = '/';
+  //   // }
+  //   console.log("authend", isUserAuthenticated);
+  // }, [isUserAuthenticated()]);
 
-  const handleAddProduct = () => {
-    setShowAddProduct(true);
+  const handleDelete = async (id: string) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await fetch(`http://localhost:8080/product/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      await dispatch(deleteProduct(product.id, id));
+    } catch (error) {
+      console.log("Error deleting product", error);
+    }
   };
 
   useEffect(() => {
@@ -81,15 +101,20 @@ const Admin = () => {
     }
   };
 
+  const [openEdit, setOpenEdit] = useState<boolean>(false);
+
+  const handleEdit = (productId: string) => {
+    // setSelectedProductId(productId);
+    setOpenEdit(true);
+  };
+
+  const handleCloseEdit = () => {
+    setOpenEdit((prev) => !prev);
+  };
+
   return (
     <TableContainer sx={{}}>
-      <Button
-        sx={{ float: "right", mb: 1 }}
-        color="success"
-        onClick={handleAddProduct}
-      >
-        Add Product
-      </Button>
+      <AddProduct />
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableBody>
           {products.map((product) => (
@@ -112,10 +137,12 @@ const Admin = () => {
               </StyledTableCell>
               <StyledTableCell align="right">{product.amount}</StyledTableCell>
               <StyledTableCell align="right">
-                <Button>Edit</Button>
+                <EditProduct productId={product.id} />
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Button color="error">Delete</Button>
+                <Button onClick={() => handleDelete(product.id)} color="error">
+                  Delete
+                </Button>
               </StyledTableCell>
             </StyledTableRow>
           ))}
@@ -133,23 +160,6 @@ const Admin = () => {
       >
         Load more
       </Button>
-      {showAddProduct && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <AddProduct />
-        </Box>
-      )}
     </TableContainer>
   );
 };

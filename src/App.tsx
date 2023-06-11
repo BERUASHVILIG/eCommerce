@@ -8,6 +8,8 @@ import BreadCrumbs from "./components/breadCrumbs";
 import { Box } from "@mui/material";
 import Footer from "./components/footer";
 import Admin from "./admin";
+import Register from "./components/register";
+import Login from "./components/login";
 
 function App() {
   const { pathname } = useLocation();
@@ -23,6 +25,8 @@ function App() {
         <Route path="/productdetail/:id" element={<ProductItem />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />} />
+        {/* <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} /> */}
       </Routes>
       <Footer />
     </Box>

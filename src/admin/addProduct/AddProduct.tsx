@@ -1,150 +1,154 @@
-import React from "react";
-import { Box, Typography, Paper, TextField, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box, TextField, Button, Dialog, DialogContent } from "@mui/material";
 import { useFormik } from "formik";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useDispatch } from "react-redux";
 import { addProduct } from "../redux/actions";
 
-// Define the type for your form values
-interface FormValues {
-  title: string;
-  description: string;
-  images: [];
-  brand: string;
-  category: string;
-  price: string;
-  amount: string;
-}
-
 const AddProduct = () => {
-  const dispatch = useAppDispatch();
-  //   const { product }:  = useAppSelector(
-  //     (state) => state.adminReducer
-  //   );
-  const { values, handleChange, handleSubmit, submitForm } =
-    useFormik<FormValues>({
-      initialValues: {
-        title: "",
-        description: "",
-        images: [],
-        brand: "",
-        category: "",
-        price: "",
-        amount: "",
-      },
-      onSubmit: async (formValues) => {
-        try {
-          const response = await fetch("http://localhost:8080/product", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formValues),
-          });
-          if (response.ok) {
-            const data = await response.json();
-            console.log("Product added:", data);
-            // Dispatch an action to update the state if needed
-            dispatch(addProduct(formValues));
-          } else {
-            console.error("Error adding product:", response.status);
-            // Handle the error as needed
-          }
-        } catch (error) {
-          console.error("Error adding product:", error);
-          // Handle the error as needed
+  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const { values, handleChange, submitForm } = useFormik({
+    initialValues: {
+      title: "",
+      description: "",
+      images: [],
+      brand: "",
+      category: "",
+      price: 0,
+      amount: 0,
+    },
+    onSubmit: async (values: AddProductItem) => {
+      try {
+        const token = localStorage.getItem("token");
+
+        const response = await fetch("http://localhost:8080/product", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("data", data);
+          dispatch(addProduct(values));
+          setOpen(false); // Close the dialog after successful submission
+        } else {
+          console.error("status", response.status);
+          // Handle error scenarios or provide feedback to the user
         }
-        console.log(formValues);
-      },
-    });
+      } catch (error) {
+        console.error("error", error);
+        // Handle error scenarios or provide feedback to the user
+      }
+    },
+  });
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <Box
-      sx={{
-        width: "55%",
-        backgroundColor: "white",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap: "10px",
-        borderRadius: "8px",
-        p: 2,
-      }}
-    >
-      <Typography>Add new Product</Typography>
-      <Paper>
-        <TextField
-          id="title"
-          name="title"
-          label="Title"
-          variant="outlined"
-          value={values.title}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Paper>
-        <TextField
-          id="description"
-          name="description"
-          label="Description"
-          variant="outlined"
-          value={values.description}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Paper>
-        <TextField
-          id="images"
-          name="images"
-          label="Images"
-          variant="outlined"
-          value={values.images}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Paper>
-        <TextField
-          id="brand"
-          name="brand"
-          label="Brand"
-          variant="outlined"
-          value={values.brand}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Paper>
-        <TextField
-          id="category"
-          name="category"
-          label="Category"
-          variant="outlined"
-          value={values.category}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Paper>
-        <TextField
-          id="price"
-          name="price"
-          label="Price"
-          variant="outlined"
-          value={values.price}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Paper>
-        <TextField
-          id="amount"
-          name="amount"
-          label="Amount"
-          variant="outlined"
-          value={values.amount}
-          onChange={handleChange}
-        />
-      </Paper>
-      <Button variant="contained" onClick={submitForm}>
-        Add
-      </Button>
+    <Box>
+      <Button onClick={handleOpen}>Add Product</Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          <TextField
+            id="title"
+            name="title"
+            label="Title"
+            variant="outlined"
+            value={values.title}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+          />
+          <TextField
+            id="description"
+            name="description"
+            label="Description"
+            variant="outlined"
+            value={values.description}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+          />
+
+          <TextField
+            id="images"
+            name="images"
+            label="Images"
+            variant="outlined"
+            value={values.images.join(", ")}
+            onChange={(event) => {
+              const imageValues = event.target.value.split(", ");
+              handleChange({
+                target: {
+                  name: "images",
+                  value: imageValues,
+                },
+              });
+            }}
+            fullWidth
+            margin="dense"
+          />
+
+          <TextField
+            id="brand"
+            name="brand"
+            label="Brand"
+            variant="outlined"
+            value={values.brand}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+          />
+
+          <TextField
+            id="category"
+            name="category"
+            label="Category"
+            variant="outlined"
+            value={values.category}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+          />
+
+          <TextField
+            id="price"
+            name="price"
+            label="Price"
+            variant="outlined"
+            value={values.price}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+          />
+
+          <TextField
+            id="amount"
+            name="amount"
+            label="Amount"
+            variant="outlined"
+            value={values.amount}
+            onChange={handleChange}
+            fullWidth
+            margin="dense"
+          />
+
+          <Button onClick={submitForm} fullWidth variant="contained">
+            Add
+          </Button>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };
