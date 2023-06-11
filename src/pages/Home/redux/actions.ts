@@ -1,4 +1,4 @@
-import { Exception } from "sass";
+// import { Exception } from "sass";
 import ProductItem from "../../productItem";
 import {
   ACTIONS,
