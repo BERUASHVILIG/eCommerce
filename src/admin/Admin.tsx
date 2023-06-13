@@ -19,7 +19,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import { deleteProduct, editProduct } from "./redux/actions";
+import { deleteProduct, editProduct } from "../pages/Home/redux/actions";
 import { isUserAuthenticated } from "../utils/auth";
 import EditProduct from "./editProduct";
 
@@ -66,7 +66,6 @@ const Admin = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-
       await dispatch(deleteProduct(product.id, id));
     } catch (error) {
       console.log("Error deleting product", error);
@@ -137,7 +136,7 @@ const Admin = () => {
               </StyledTableCell>
               <StyledTableCell align="right">{product.amount}</StyledTableCell>
               <StyledTableCell align="right">
-                <EditProduct productId={product.id} />
+                <EditProduct product={product} productId={product.id} />
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Button onClick={() => handleDelete(product.id)} color="error">

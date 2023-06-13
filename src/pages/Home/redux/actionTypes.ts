@@ -9,6 +9,10 @@ import {
   SAVE_SLIDER_PRODUCTS,
   SAVE_PRODUCTITEM_SLIDER,
   SAVE_SEARCH_RESULT,
+  SAVE_BRANDS,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  EDIT_PRODUCT,
 } from "./actions";
 
 export type SAVE_PRODUCTS_ACTION = {
@@ -62,6 +66,28 @@ export type SET_TOTAL_PRODUCTS_ACTION = {
   totalProducts: number;
 };
 
+export type SAVE_BRANDS_ACTION = {
+  type: typeof SAVE_BRANDS;
+  brands: string[];
+};
+
+export type ADD_PRODUCT_ACTION = {
+  type: typeof ADD_PRODUCT;
+  addedProduct: AddProductItem;
+};
+
+export type DELETE_PRODUCT_ACTION = {
+  type: typeof DELETE_PRODUCT;
+  product: string;
+  id: string;
+};
+
+export type EDIT_PRODUCT_ACTION = {
+  type: typeof EDIT_PRODUCT;
+  productId: string;
+  updatedProduct: ProductItem;
+};
+
 export type ACTIONS =
   | SAVE_PRODUCTS_ACTION
   | SAVE_PRODUCT_ACTION
@@ -72,4 +98,8 @@ export type ACTIONS =
   | DECREASE_QUANTITY_ACTION
   | SAVE_SLIDER_PRODUCTS_ACTION
   | SAVE_PRODUCTITEM_SLIDER_ACTION
-  | SAVE_SEARCH_RESULT_ACTION;
+  | SAVE_SEARCH_RESULT_ACTION
+  | SAVE_BRANDS_ACTION
+  | ADD_PRODUCT_ACTION
+  | DELETE_PRODUCT_ACTION
+  | EDIT_PRODUCT_ACTION;

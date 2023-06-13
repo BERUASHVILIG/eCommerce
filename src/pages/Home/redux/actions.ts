@@ -12,6 +12,10 @@ import {
   SAVE_SLIDER_PRODUCTS_ACTION,
   SAVE_PRODUCTITEM_SLIDER_ACTION,
   SAVE_SEARCH_RESULT_ACTION,
+  SAVE_BRANDS_ACTION,
+  ADD_PRODUCT_ACTION,
+  DELETE_PRODUCT_ACTION,
+  EDIT_PRODUCT_ACTION,
 } from "../redux/actionTypes";
 
 export const SAVE_PRODUCTS = "SAVE_PRODUCTS";
@@ -24,6 +28,11 @@ export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const SAVE_SLIDER_PRODUCTS = "SAVE_SLIDER_PRODUCTS";
 export const SAVE_PRODUCTITEM_SLIDER = "SAVE_PRODUCTITEM_SLIDER";
 export const SAVE_SEARCH_RESULT = "SEARCH_RESULT";
+export const SAVE_BRANDS = "SAVE_BRANDS";
+
+export const ADD_PRODUCT = "ADD_PRODUCT";
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const EDIT_PRODUCT = "EDIT_PRODUCT";
 
 export const saveProducts = (
   products: ProductItem[]
@@ -93,4 +102,34 @@ export const setTotalProducts = (
 ): SET_TOTAL_PRODUCTS_ACTION => ({
   type: SET_TOTAL_PRODUCTS,
   totalProducts,
+});
+
+export const saveBrands = (brands: string[]): SAVE_BRANDS_ACTION => ({
+  type: SAVE_BRANDS,
+  brands,
+});
+
+export const addProduct = (
+  addedProduct: AddProductItem
+): ADD_PRODUCT_ACTION => ({
+  type: ADD_PRODUCT,
+  addedProduct,
+});
+
+export const deleteProduct = (
+  product: string,
+  id: string
+): DELETE_PRODUCT_ACTION => ({
+  type: DELETE_PRODUCT,
+  product,
+  id,
+});
+
+export const editProduct = (
+  productId: string,
+  updatedProduct: ProductItem
+): EDIT_PRODUCT_ACTION => ({
+  type: EDIT_PRODUCT,
+  productId,
+  updatedProduct,
 });

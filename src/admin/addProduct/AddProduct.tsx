@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, TextField, Button, Dialog, DialogContent } from "@mui/material";
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import { addProduct } from "../redux/actions";
+import { addProduct } from "../../pages/Home/redux/actions";
 
 const AddProduct = () => {
   const [open, setOpen] = useState(false);

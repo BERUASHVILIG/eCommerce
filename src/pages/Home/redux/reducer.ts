@@ -10,11 +10,21 @@ import {
   SAVE_SLIDER_PRODUCTS,
   SAVE_PRODUCTITEM_SLIDER,
   SAVE_SEARCH_RESULT,
+  SAVE_BRANDS,
+  ADD_PRODUCT,
+  DELETE_PRODUCT,
+  EDIT_PRODUCT,
 } from "./actions";
 import { productInitalState } from "../redux/initialState";
+import {
+  addProductItemInitial,
+  editProductInitial,
+} from "../../../admin/redux/initialState";
 
 const defaultState: GlobalState = {
   products: [],
+  editProduct: editProductInitial,
+  addedProduct: addProductItemInitial,
   cartItems: [],
   slider: [],
   productItemSlider: [],
@@ -22,6 +32,7 @@ const defaultState: GlobalState = {
   product: productInitalState,
   page: 1, // Add the page state property
   totalProducts: 0, // Add the totalProducts state property
+  brands: [],
 };
 
 const homeReducer = (state = defaultState, action: ACTIONS) => {
@@ -48,25 +59,6 @@ const homeReducer = (state = defaultState, action: ACTIONS) => {
       return { ...state, page: action.page };
     case SET_TOTAL_PRODUCTS: // Handle the new action
       return { ...state, totalProducts: action.totalProducts };
-    // Rest of the cases...
-
-    // case UPDATE_CART:
-    //   const updatedProduct = action.product;
-    //   const updatedCart = state.cartItems.map((item) => {
-    //     if (item.id === updatedProduct.id) {
-    //       return { ...item, quantity: item.quantity + action.quantity };
-    //     }
-    //     return item;
-    //   });
-    //   // If the product is not already in the cart, add it as a new item
-    //   if (!updatedCart.some((item) => item.id === updatedProduct.id)) {
-    //     updatedCart.push({
-    //       ...updatedProduct,
-    //       quantity: action.quantity,
-    //     });
-    //   }
-    //   return { ...state, cartItems: updatedCart };
-
     case UPDATE_CART:
       const updatedProduct = action.product;
       const updatedCart = state.cartItems.map((item) => {
@@ -120,6 +112,27 @@ const homeReducer = (state = defaultState, action: ACTIONS) => {
       });
       const newcart = itemsAfterDecreasing.filter(Boolean); // Remove null values
       return { ...state, cartItems: newcart };
+    case SAVE_BRANDS:
+      return { ...state, brands: action.brands };
+
+    case ADD_PRODUCT:
+      return { ...state, product: action.addedProduct };
+    case DELETE_PRODUCT:
+      const updatedProducts = state.products.filter(
+        (products) => products.id !== action.id
+      );
+      return { ...state, products: updatedProducts };
+    case EDIT_PRODUCT:
+      const editProduct = state.products.map((product) => {
+        if (product.id === action.productId) {
+          return {
+            ...product,
+            ...action.updatedProduct, // Update the product with the new data
+          };
+        }
+        return product;
+      });
+      return { ...state, products: editProduct };
     default:
       return state;
   }

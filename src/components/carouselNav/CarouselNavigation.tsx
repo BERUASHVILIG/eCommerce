@@ -1,73 +1,85 @@
-// import React from "react";
-// import { Box, Paper, Typography } from "@mui/material";
-
-// const CarouselNavigation = () => {
-//   return (
-//     <Box sx={{ position: "absolute", left: "250px", zIndex: 5 }}>
-//       <Typography sx={{ backgroundColor: "orange" }}>Brands</Typography>
-//       <Paper square sx={{ width: "200px", p: 3, height: "100%" }}>
-//         <Typography>Samsung</Typography>
-//         <Typography>Sony</Typography>
-//         <Typography>LG</Typography>
-//         <Typography>Apple</Typography>
-//         <Typography>Microsoft</Typography>
-//         <Typography>Dyson</Typography>
-//         <Typography>Google</Typography>
-//       </Paper>
-//     </Box>
-//   );
-// };
-
-// export default CarouselNavigation;
-
-import React from "react";
+import React, { useEffect, useState } from "react";
+import "./CarouselNavigation.scss";
 import {
   Box,
   Container,
-  Divider,
+  FormControl,
+  InputLabel,
   List,
   ListItem,
-  ListItemText,
-  Paper,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Typography,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+// Replace the following imports with your own action and selector
+import { saveBrands } from "../../pages/Home/redux/actions";
+import { getAllBrands } from "../../utils/ajax";
+import { useAppSelector } from "../../redux/hooks";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const CarouselNavigation = () => {
+  const navigate = useNavigate();
+  const { Brand } = useParams();
+  const [brand, setBrand] = useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setBrand(event.target.value as string);
+  };
+
+  const handleBrand = () => {
+    navigate("/brand/:Brand");
+  };
+
+  const dispatch = useDispatch();
+  const { brands }: GlobalState = useAppSelector((state) => state.homeReducer); // Replace 'state.brands' with your actual selector
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const { data } = await getAllBrands(); // Replace 'getBrandsData' with your own function
+        dispatch(saveBrands(data.brands));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchBrands();
+  }, [dispatch]);
+
   return (
-    <Container
-      sx={{
-        height: "280px",
-        position: "absolute",
-        ml: 25,
-        zIndex: 3,
-        width: "250px",
-      }}
-    >
-      <Typography sx={{ backgroundColor: "orange" }}>Brands</Typography>
-      <List
-        sx={{ backgroundColor: "#fff" }}
-        component="nav"
-        aria-label="mailbox folders"
-      >
-        <ListItem button>
-          <ListItemText primary="samsung" />
-        </ListItem>
-        <Divider />
-        <ListItem button divider>
-          <ListItemText primary="Sony" />
-        </ListItem>
-        <ListItem button>
-          <ListItemText primary="Lg" />
-        </ListItem>
-        <Divider light />
-        <ListItem button>
-          <ListItemText primary="Apple" />
-        </ListItem>
-        <Divider light />
-        {/* <ListItem button>
-          <ListItemText primary="Apple" />
-        </ListItem> */}
-      </List>
+    <Container className="carousel-navigation">
+      {brands.length > 0 && (
+        <List
+          className="list"
+          sx={{
+            backgroundColor: "#ff5000",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            // ml: 15,
+            zIndex: 3,
+            width: "227px",
+          }}
+        >
+          <Typography sx={{ backgroundColor: "#ff5000" }}>Brands</Typography>
+          {brands.slice(0, 9).map((brand: string, index: any) => (
+            <ListItem
+              // onClick={handleBrand}
+              sx={{ backgroundColor: "#fff", cursor: "pointer" }}
+              key={index}
+            >
+              <Link
+                style={{ color: "black", textDecoration: "none" }}
+                to={`/brand/${brand}`}
+              >
+                {brand}
+              </Link>
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Container>
   );
 };

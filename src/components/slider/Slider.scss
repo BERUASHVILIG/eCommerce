@@ -1,11 +1,14 @@
 .slider-container {
-  width: 90%;
+  width: 100%;
+  position: relative;
   margin: auto;
-  // background-color: red;
+  height: 370px;
+  background-color: rgb(216, 215, 215);
 }
 .slider-image {
   display: block;
-  margin: 0 auto;
+  margin-top: 0;
+  margin-left: 47.5%;
   width: 80%;
   max-width: 300px;
 }
@@ -16,15 +19,29 @@
   font-size: 30px;
   border-radius: 8px;
   padding: 5px;
+  scale: 1.5;
+  position: absolute;
 }
 
 .arrow-next:hover,
 .arrow-back:hover {
   color: black;
+
   background-color: orange;
   padding: 5px;
   border-radius: 8px;
   scale: 1.5;
+}
+
+.slick-arrow.slick-prev {
+  position: absolute;
+  left: 450px;
+  z-index: 5;
+}
+.slick-arrow.slick-next {
+  position: absolute;
+  right: 200px;
+  z-index: 5;
 }
 
 @media (max-width: 768px) {

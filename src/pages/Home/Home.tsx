@@ -3,11 +3,12 @@ import { saveProducts, setPage, setTotalProducts } from "./redux/actions";
 import { getAllProducts } from "../../utils/ajax";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ProductCard from "../../components/productCard";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import BreadCrumbs from "../../components/breadCrumbs";
 import Sliderr from "../../components/slider";
 
 import "./Home.scss";
+import BrandCarousel from "../../components/brandCarousel";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -52,9 +53,10 @@ const Home = () => {
           return <ProductCard key={product.id} product={product} />;
         })}
         {products.length < totalProducts && (
-          <button onClick={handleLoadMore}>Load More</button>
+          <Button onClick={handleLoadMore}>Load more</Button>
         )}
       </Box>
+      <BrandCarousel />
     </Box>
   );
 };

@@ -1,19 +1,22 @@
 type GlobalState = {
   products: ProductItem[];
   product: ProductItem;
+  addedProduct: AddProductItem;
+  editProduct: EditProductItem;
   cartItems: CartItem[];
   slider: ProductItem[];
   searchResult: ProductItem[];
   productItemSlider: ProductItem[];
   page: number;
   totalProducts: number;
+  brands: string[];
 };
 
-type AdminState = {
-  products: ProductItem[];
-  product: AddProductItem;
-  editProduct: EditProductItem;
-};
+// type AdminState = {
+//   adminProducts: ProductItem[];
+//   product: AddProductItem;
+//   editProduct: EditProductItem;
+// };
 
 type CartItem = {
   product: ProductItem;

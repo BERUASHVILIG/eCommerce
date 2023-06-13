@@ -1,0 +1,27 @@
+.product-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  position: relative;
+  background-color: white;
+  height: 400px;
+  padding: 10px;
+}
+.arrow-nextt {
+  background-color: red;
+}
+
+// .slick-arrow.slick-prev {
+//   position: absolute;
+//   left: 10px;
+// }
+
+// .slick-arrow.slick-next {
+//   position: absolute;
+//   left: 10px;
+// }
+
+.arrow-backk {
+  background-color: red;
+}

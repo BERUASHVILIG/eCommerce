@@ -43,6 +43,8 @@ export const loadSearchResult = (value: string) =>
     page_number: 0,
   });
 
+export const getAllBrands = () => loadAllProducts.get("/brands");
+
 export const sentAddedProduct = () =>
   loadAllProducts.post("/product", {
     title: "",
