@@ -1,74 +1,43 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-
-import "./ProductCard.scss";
-
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 import { useAppDispatch } from "../../redux/hooks";
 import { updateCart } from "../../pages/Home/redux/actions";
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import "./ProductCard.scss";
 
 const ProductCard = ({ product }: { product: ProductItem }) => {
   const dispatch = useAppDispatch();
+  const [productImage, setProductImage] = useState(0);
 
   const handleAddToCart = () => {
     dispatch(updateCart(product, 1)); // Adjust the quantity as needed
   };
 
-  const PreviousBtn = (props: any) => {
-    const { className, onClick } = props;
-    return (
-      <div className={className} onClick={onClick}>
-        <ArrowBackIos
-          sx={{ position: "absolute", left: "50" }}
-          className="arrow-backk"
-        />
-      </div>
-    );
+  const nextImage = (prop: any) => {
+    const { className } = prop;
+    setProductImage((prev) => (prev + 1) % product.images.length);
   };
 
-  const NextBtn = (props: any) => {
-    const { className, onClick } = props;
-    return (
-      <div className={className} onClick={onClick}>
-        <ArrowForwardIos className="arrow-nextt" />
-      </div>
+  const prevImage = (prop: any) => {
+    const { className } = prop;
+    setProductImage(
+      (prev) => (prev - 1 + product.images.length) % product.images.length
     );
   };
 
   return (
     <Box className="product-container">
-      <Box>
-        <Slider
-          // autoplay
-          // autoplaySpeed={3000}
-          // dots
-          initialSlide={0}
-          // infinite
-          // prevArrow={<PreviousBtn />}
-          // nextArrow={<NextBtn />}
-        >
-          {product.images.map((image, index) => (
-            <Box key={index}>
-              <img
-                style={{
-                  width: "157px",
-                  height: "157px",
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "auto",
-                }}
-                src={image}
-                alt={`Product Image ${index + 1}`}
-              />
-            </Box>
-          ))}
-        </Slider>
+      <Box className="product-images">
+        <ArrowLeft className="arrow" onClick={prevImage} />
+        <img
+          className="product-image"
+          style={{ width: "157px", height: "157px" }}
+          src={product.images[productImage]}
+          alt={product.title}
+        />
+        <ArrowRight className="arrow" onClick={nextImage} />
       </Box>
       <Box>
         <Typography sx={{ height: "60px" }}>
@@ -88,7 +57,7 @@ const ProductCard = ({ product }: { product: ProductItem }) => {
           {parseFloat(product.price.toString()).toFixed(2)}₾
         </Typography>
         <Button sx={{ cursor: "pointer", mt: 3 }} onClick={handleAddToCart}>
-          add cart{" "}
+          Add to Cart{" "}
           <span style={{ marginLeft: "5px" }}>
             <ShoppingCartOutlinedIcon />
           </span>

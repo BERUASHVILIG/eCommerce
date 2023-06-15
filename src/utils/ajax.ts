@@ -15,6 +15,13 @@ export const getAllProducts = (page: number) =>
     page_number: page,
   });
 
+export const loadBrandProducts = (brand: string) =>
+  loadAllProducts.post("/products", {
+    keyword: brand,
+    page_size: 16,
+    page_number: 1,
+  });
+
 // export const getAllProductsAdmin = (page: number) =>
 //   loadAllProducts.post("/products", {
 //     keyword: "",

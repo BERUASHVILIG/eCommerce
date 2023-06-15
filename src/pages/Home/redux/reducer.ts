@@ -14,6 +14,7 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   EDIT_PRODUCT,
+  SAVE_BRAND_PRODUCTS,
 } from "./actions";
 import { productInitalState } from "../redux/initialState";
 import {
@@ -33,6 +34,7 @@ const defaultState: GlobalState = {
   page: 1, // Add the page state property
   totalProducts: 0, // Add the totalProducts state property
   brands: [],
+  brandProducts: [],
 };
 
 const homeReducer = (state = defaultState, action: ACTIONS) => {
@@ -51,6 +53,8 @@ const homeReducer = (state = defaultState, action: ACTIONS) => {
       return { ...state, slider: action.slider };
     case SAVE_PRODUCTITEM_SLIDER:
       return { ...state, productItemSlider: action.productItemSlider };
+    case SAVE_BRAND_PRODUCTS:
+      return { ...state, brandProducts: action.brandProducts };
     case SAVE_SEARCH_RESULT:
       return { ...state, searchResult: action.searchResult };
     case SAVE_PRODUCT:

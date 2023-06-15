@@ -16,6 +16,7 @@ import {
   ADD_PRODUCT_ACTION,
   DELETE_PRODUCT_ACTION,
   EDIT_PRODUCT_ACTION,
+  SAVE_BRAND_PRODUCTS_ACTION,
 } from "../redux/actionTypes";
 
 export const SAVE_PRODUCTS = "SAVE_PRODUCTS";
@@ -29,6 +30,7 @@ export const SAVE_SLIDER_PRODUCTS = "SAVE_SLIDER_PRODUCTS";
 export const SAVE_PRODUCTITEM_SLIDER = "SAVE_PRODUCTITEM_SLIDER";
 export const SAVE_SEARCH_RESULT = "SEARCH_RESULT";
 export const SAVE_BRANDS = "SAVE_BRANDS";
+export const SAVE_BRAND_PRODUCTS = "SAVE_BRAND_PRODUCTS";
 
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
@@ -53,6 +55,13 @@ export const saveProductItemSlider = (
 ): SAVE_PRODUCTITEM_SLIDER_ACTION => ({
   type: SAVE_PRODUCTITEM_SLIDER,
   productItemSlider,
+});
+
+export const saveBrandProducts = (
+  brandProducts: ProductItem[]
+): SAVE_BRAND_PRODUCTS_ACTION => ({
+  type: SAVE_BRAND_PRODUCTS,
+  brandProducts,
 });
 
 export const saveSearchResult = (

@@ -10,6 +10,7 @@ type GlobalState = {
   page: number;
   totalProducts: number;
   brands: string[];
+  brandProducts: ProductItem[];
 };
 
 // type AdminState = {

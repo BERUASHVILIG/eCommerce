@@ -13,6 +13,7 @@ import {
   ADD_PRODUCT,
   DELETE_PRODUCT,
   EDIT_PRODUCT,
+  SAVE_BRAND_PRODUCTS,
 } from "./actions";
 
 export type SAVE_PRODUCTS_ACTION = {
@@ -23,6 +24,11 @@ export type SAVE_PRODUCTS_ACTION = {
 export type SAVE_SLIDER_PRODUCTS_ACTION = {
   type: typeof SAVE_SLIDER_PRODUCTS;
   slider: ProductItem[];
+};
+
+export type SAVE_BRAND_PRODUCTS_ACTION = {
+  type: typeof SAVE_BRAND_PRODUCTS;
+  brandProducts: ProductItem[];
 };
 
 export type SAVE_PRODUCTITEM_SLIDER_ACTION = {
@@ -102,4 +108,5 @@ export type ACTIONS =
   | SAVE_BRANDS_ACTION
   | ADD_PRODUCT_ACTION
   | DELETE_PRODUCT_ACTION
-  | EDIT_PRODUCT_ACTION;
+  | EDIT_PRODUCT_ACTION
+  | SAVE_BRAND_PRODUCTS_ACTION;
