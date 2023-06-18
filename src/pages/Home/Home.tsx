@@ -7,6 +7,8 @@ import { Box, Button, Typography } from "@mui/material";
 import BreadCrumbs from "../../components/breadCrumbs";
 import Sliderr from "../../components/slider";
 
+import { getFinalProject } from "../../utils/services/checkout";
+
 import "./Home.scss";
 import BrandCarousel from "../../components/brandCarousel";
 
@@ -26,7 +28,7 @@ const Home = () => {
         console.log("err", error);
       }
     };
-
+    getFinalProject();
     fetchProducts();
   }, [page]);
 

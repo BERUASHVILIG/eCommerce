@@ -15,16 +15,30 @@ const ProductCard = ({ product }: { product: ProductItem }) => {
     dispatch(updateCart(product, 1)); // Adjust the quantity as needed
   };
 
+  // const nextImage = (prop: any) => {
+  //   const { className } = prop;
+  //   setProductImage((prev) => (prev + 1) % product.images.length);
+  // };
+
+  // const prevImage = (prop: any) => {
+  //   const { className } = prop;
+  //   setProductImage(
+  //     (prev) => (prev - 1 + product.images.length) % product.images.length
+  //   );
+  // };
+
   const nextImage = (prop: any) => {
-    const { className } = prop;
-    setProductImage((prev) => (prev + 1) % product.images.length);
+    if (product.images && product.images.length > 0) {
+      setProductImage((prev) => (prev + 1) % product.images.length);
+    }
   };
 
   const prevImage = (prop: any) => {
-    const { className } = prop;
-    setProductImage(
-      (prev) => (prev - 1 + product.images.length) % product.images.length
-    );
+    if (product.images && product.images.length > 0) {
+      setProductImage(
+        (prev) => (prev - 1 + product.images.length) % product.images.length
+      );
+    }
   };
 
   return (

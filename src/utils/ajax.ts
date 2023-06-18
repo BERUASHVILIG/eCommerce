@@ -8,16 +8,23 @@ export const loadAllProducts = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-export const getAllProducts = (page: number) =>
+// export const getAllProducts = (page: number) =>
+//   loadAllProducts.post("/products", {
+//     keyword: "",
+//     page_size: 10,
+//     page_number: page,
+//   });
+
+export const getAllProducts = (page: number, searchQuery: string) =>
   loadAllProducts.post("/products", {
-    keyword: "",
+    keyword: searchQuery,
     page_size: 10,
     page_number: page,
   });
 
-export const loadBrandProducts = (brand: string) =>
+export const loadBrandProducts = (brand: string, category: string) =>
   loadAllProducts.post("/products", {
-    keyword: brand,
+    keyword: `${brand} ${category}`,
     page_size: 16,
     page_number: 1,
   });

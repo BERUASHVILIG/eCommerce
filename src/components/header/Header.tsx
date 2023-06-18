@@ -1,13 +1,16 @@
 import React from "react";
 import { Badge, Box, MenuItem, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchContainer from "../search/SearchContainer";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useAppSelector } from "../../redux/hooks";
 import Register from "../register";
 import Login from "../login";
 
+import logo from "../../images/ecomlogo-removebg-preview.png";
+
 const Header = () => {
+  const navigate = useNavigate();
   const languages = [
     {
       value: "Geo",
@@ -24,34 +27,73 @@ const Header = () => {
     (state) => state.homeReducer
   );
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        width: "100%",
-        height: "60px",
-        backgroundColor: "grey",
-      }}
-    >
-      <SearchContainer />
+    <Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography sx={{ ml: 23 }}>ცხელი ხაზი: +032 22 22 25</Typography>
+        <Box sx={{ display: "flex" }}>
+          <Typography>ფილიალები</Typography>
+          <TextField
+            id="outlined-select-currency"
+            select
+            defaultValue="Geo"
+            size="small"
+            InputProps={{
+              style: {
+                outline: "none",
+              },
+            }}
+            sx={{
+              backgroundColor: "#fff",
+              m: 1,
+              mr: 2,
+              borderRadius: "5px",
+              border: "2px solid",
+              height: "40px",
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: "transparent",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "transparent",
+                },
+              },
+            }}
+          >
+            {languages.map((language) => (
+              <MenuItem
+                sx={{ display: "flex", gap: "3px" }}
+                key={language.value}
+                value={language.value}
+              >
+                {language.label}
+                <img width={"20px"} src={language.img} alt="" />
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+      </Box>
       <Box
         sx={{
           display: "flex",
-          justifyContent: "center",
-          marginLeft: "250px",
-          gap: "20px",
-          mt: 2,
+          justifyContent: "space-between",
+          width: "100%",
+          height: "60px",
+          backgroundColor: "#fff", // "grey",
         }}
       >
-        <Link to={"/"}>Home</Link>
+        <img
+          onClick={() => navigate("/")}
+          style={{ marginTop: "5px", marginLeft: "180px", cursor: "pointer" }}
+          src={logo}
+          alt=""
+        />
         <Box
           sx={{
             display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "50px",
+            // justifyContent: "flex-start",
           }}
         >
+          <SearchContainer />
           <Link
             style={{
               display: "flex",
@@ -79,46 +121,6 @@ const Header = () => {
             <Register />
           </Box>
         </Box>
-      </Box>
-      <Box sx={{}}>
-        <TextField
-          id="outlined-select-currency"
-          select
-          defaultValue="Geo"
-          size="small"
-          InputProps={{
-            style: {
-              outline: "none",
-            },
-          }}
-          sx={{
-            backgroundColor: "#fff",
-            m: 1,
-            mr: 2,
-            borderRadius: "5px",
-            border: "2px solid",
-            height: "40px",
-            "& .MuiOutlinedInput-root": {
-              "&:hover fieldset": {
-                borderColor: "transparent",
-              },
-              "&.Mui-focused fieldset": {
-                borderColor: "transparent",
-              },
-            },
-          }}
-        >
-          {languages.map((language) => (
-            <MenuItem
-              sx={{ display: "flex", gap: "3px" }}
-              key={language.value}
-              value={language.value}
-            >
-              {language.label}
-              <img width={"20px"} src={language.img} alt="" />
-            </MenuItem>
-          ))}
-        </TextField>
       </Box>
     </Box>
   );

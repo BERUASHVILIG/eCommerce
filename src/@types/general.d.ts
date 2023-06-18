@@ -1,4 +1,5 @@
 type GlobalState = {
+  keyword: any;
   products: ProductItem[];
   product: ProductItem;
   addedProduct: AddProductItem;

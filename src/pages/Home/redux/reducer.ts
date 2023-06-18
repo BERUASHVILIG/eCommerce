@@ -35,20 +35,17 @@ const defaultState: GlobalState = {
   totalProducts: 0, // Add the totalProducts state property
   brands: [],
   brandProducts: [],
+  keyword: "",
 };
 
 const homeReducer = (state = defaultState, action: ACTIONS) => {
   switch (action.type) {
-    // case SAVE_PRODUCTS:
-    // return { ...state, products: action.products };
     case SAVE_PRODUCTS:
       const existingIds = state.products.map((product) => product.id);
       const newProducts = action.products.filter(
         (product) => !existingIds.includes(product.id)
       );
       return { ...state, products: [...state.products, ...newProducts] };
-
-    // return { ...state, products: [...state.products, ...action.products] };
     case SAVE_SLIDER_PRODUCTS:
       return { ...state, slider: action.slider };
     case SAVE_PRODUCTITEM_SLIDER:

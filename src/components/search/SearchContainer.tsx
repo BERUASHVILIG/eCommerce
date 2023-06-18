@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { loadSearchResult } from "../../utils/ajax";
 import { saveSearchResult } from "../../pages/Home/redux/actions";
 import { Link } from "react-router-dom";
+import { Box, TextField } from "@mui/material";
 
 const SearchContainer = () => {
   const dispatch = useAppDispatch();
@@ -47,20 +48,28 @@ const SearchContainer = () => {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         position: "absolute",
         display: "flex",
         flexDirection: "column",
-        top: "15px",
+        left: "40%",
+        width: "350px",
+        top: "70px",
         zIndex: "3",
+        height: "10px",
       }}
     >
-      <input type="text" value={input} onChange={handleInputChange} />
-      {/* Render the search results here */}
+      <TextField
+        sx={{ height: "10px" }}
+        type="text"
+        placeholder="ძიება..."
+        value={input}
+        onChange={handleInputChange}
+      />
       {debouncedInput && (
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             justifyContent: "center",
             flexDirection: "column",
@@ -71,8 +80,8 @@ const SearchContainer = () => {
           }}
         >
           {searchResult.map((product: ProductItem) => (
-            <div
-              style={{
+            <Box
+              sx={{
                 display: "flex",
                 height: "80px",
                 marginTop: "55px",
@@ -82,11 +91,11 @@ const SearchContainer = () => {
             >
               <img height="50px" src={product.images[1]} alt="" />
               <Link to={`productdetail/${product.id}`}>{product.title}</Link>
-            </div>
+            </Box>
           ))}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 

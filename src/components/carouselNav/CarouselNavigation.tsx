@@ -73,17 +73,17 @@
 
 // export default CarouselNavigation;
 
-// CarouselNavigation.tsx
 import React from "react";
 import { Box, Container, List, ListItem, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Brand from "../../pages/brand";
+import "./CarouselNavigation.scss";
 
 const CarouselNavigation = () => {
   const brands = [
     "Apple",
     "samsung",
-    "LG",
+    "Huawei",
     "Sony",
     "Microsoft",
     "Google",
@@ -97,7 +97,7 @@ const CarouselNavigation = () => {
       <List
         className="list"
         sx={{
-          backgroundColor: "#ff5000",
+          backgroundColor: "#5e35b1", //"#ff5000",
           height: "100%",
           position: "absolute",
           top: 0,
@@ -105,7 +105,7 @@ const CarouselNavigation = () => {
           width: "227px",
         }}
       >
-        <Typography sx={{ backgroundColor: "#ff5000" }}>Brands</Typography>
+        <Typography sx={{ backgroundColor: "#5e35b1" }}>Brands</Typography>
         {brands.map((brand) => (
           <ListItem
             key={brand}
