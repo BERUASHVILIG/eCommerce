@@ -43,8 +43,8 @@ type EditProductItem = {
   brand: string;
   category: string;
   price: number;
-  rating: number;
-  amount: number;
+  rating: string;
+  amount: string;
 };
 
 type ProductItem = {

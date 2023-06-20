@@ -17,6 +17,7 @@ import User from "./pages/user";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import AdminHeader from "./admin/adminHeader";
 import AdminFooter from "./admin/adminFooter";
+import ScrollToTop from "./components/subComponents/scroll/ScrollToTop";
 
 interface CustomJwtPayload extends JwtPayload {
   isAdmin?: boolean;
@@ -69,6 +70,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
+      {/* <ScrollToTop /> */}
       <Footer />
     </Box>
   );

@@ -6,26 +6,17 @@ import { updateCart } from "../../pages/Home/redux/actions";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { ArrowLeft, ArrowRight } from "@mui/icons-material";
 import "./ProductCard.scss";
+import { useTranslation } from "react-i18next";
 
 const ProductCard = ({ product }: { product: ProductItem }) => {
+  const { t } = useTranslation();
+
   const dispatch = useAppDispatch();
   const [productImage, setProductImage] = useState(0);
 
   const handleAddToCart = () => {
     dispatch(updateCart(product, 1)); // Adjust the quantity as needed
   };
-
-  // const nextImage = (prop: any) => {
-  //   const { className } = prop;
-  //   setProductImage((prev) => (prev + 1) % product.images.length);
-  // };
-
-  // const prevImage = (prop: any) => {
-  //   const { className } = prop;
-  //   setProductImage(
-  //     (prev) => (prev - 1 + product.images.length) % product.images.length
-  //   );
-  // };
 
   const nextImage = (prop: any) => {
     if (product.images && product.images.length > 0) {
@@ -71,7 +62,7 @@ const ProductCard = ({ product }: { product: ProductItem }) => {
           {parseFloat(product.price.toString()).toFixed(2)}₾
         </Typography>
         <Button sx={{ cursor: "pointer", mt: 3 }} onClick={handleAddToCart}>
-          Add to Cart{" "}
+          {t("global.addToCart")}
           <span style={{ marginLeft: "5px" }}>
             <ShoppingCartOutlinedIcon />
           </span>

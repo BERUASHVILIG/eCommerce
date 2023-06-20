@@ -21,7 +21,7 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await getAllProducts(page);
+        const { data } = await getAllProducts(page, "");
         dispatch(saveProducts(data.products));
         dispatch(setTotalProducts(data.total_found));
       } catch (error) {
@@ -36,7 +36,7 @@ const Home = () => {
     if (products.length < totalProducts) {
       const newPage = page + 10;
       try {
-        const { data } = await getAllProducts(newPage);
+        const { data } = await getAllProducts(newPage, "");
         dispatch(saveProducts(data.products));
         dispatch(setTotalProducts(data.total_found));
         dispatch(setPage(newPage));

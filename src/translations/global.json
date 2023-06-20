@@ -1,0 +1,24 @@
+{
+  "en": {
+    "hotline": "Hotline",
+    "brands": "brands",
+    "branches": "Branches",
+    "cart": "Cart",
+    "addToCart": "Add To ",
+    "hotOffers": "Hot Offers",
+    "navigation": "Navigation",
+    "signIn": "SignIn",
+    "signUp": "signUp"
+  },
+  "ge": {
+    "hotline": "ცხელი ხაზი",
+    "brands": "ბრენდები",
+    "branches": "ფილიალები",
+    "cart": "კალათა",
+    "addToCart": "დაამატე",
+    "hotOffers": "ცხელი შეთავაზებები",
+    "navigation": "ნავიგაცია",
+    "signIn": "შესვლა",
+    "signUp": "რეგისტრაცია"
+  }
+}

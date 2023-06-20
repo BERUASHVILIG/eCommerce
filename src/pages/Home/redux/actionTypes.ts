@@ -14,6 +14,7 @@ import {
   DELETE_PRODUCT,
   EDIT_PRODUCT,
   SAVE_BRAND_PRODUCTS,
+  UPDATE_PRODUCT,
 } from "./actions";
 
 export type SAVE_PRODUCTS_ACTION = {
@@ -94,6 +95,11 @@ export type EDIT_PRODUCT_ACTION = {
   updatedProduct: ProductItem;
 };
 
+export type UPDATE_PRODUCT_ACTION = {
+  type: typeof UPDATE_PRODUCT;
+  updatedProduct: EditProductItem;
+};
+
 export type ACTIONS =
   | SAVE_PRODUCTS_ACTION
   | SAVE_PRODUCT_ACTION
@@ -109,4 +115,5 @@ export type ACTIONS =
   | ADD_PRODUCT_ACTION
   | DELETE_PRODUCT_ACTION
   | EDIT_PRODUCT_ACTION
-  | SAVE_BRAND_PRODUCTS_ACTION;
+  | SAVE_BRAND_PRODUCTS_ACTION
+  | UPDATE_PRODUCT_ACTION;

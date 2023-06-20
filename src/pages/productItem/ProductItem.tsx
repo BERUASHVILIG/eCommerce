@@ -4,6 +4,8 @@ import { getSingleProduct } from "../../utils/ajax";
 import { saveProduct, updateCart } from "../Home/redux/actions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
+import "./ProductItem.scss";
+
 import {
   Box,
   Typography,
@@ -61,9 +63,13 @@ const ProductItem = () => {
           <Button sx={{ float: "right" }} onClick={handleBackHome}>
             Back Home
           </Button>
-          <Box sx={{ display: "flex", justifyContent: "flex-start", p: 3 }}>
+          <Box
+            className="product-detail"
+            sx={{ display: "flex", justifyContent: "flex-start", p: 3 }}
+          >
             {product && (
               <Paper
+                className="main-image-container"
                 elevation={3}
                 square
                 sx={{
@@ -74,10 +80,7 @@ const ProductItem = () => {
                 <img
                   src={product.images[activeImageIndex]}
                   alt=""
-                  style={{
-                    width: "400px",
-                    marginTop: "10px",
-                  }}
+                  className="product-image"
                 />
               </Paper>
             )}
@@ -123,13 +126,9 @@ const ProductItem = () => {
               >
                 <img
                   src={img}
-                  alt=""
+                  alt="img"
                   onClick={() => handleClickImage(index)}
-                  style={{
-                    width: "70px",
-                    cursor: "pointer",
-                    margin: "0 5px",
-                  }}
+                  className="container-images"
                 />
               </Paper>
             ))}

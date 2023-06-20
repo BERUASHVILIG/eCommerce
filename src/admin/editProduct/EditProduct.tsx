@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Box, Dialog, TextField, Button, DialogContent } from "@mui/material";
-import { loadAllProducts } from "../../utils/ajax";
+import { updateProduct } from "../../pages/Home/redux/actions";
 
 interface EditProductProps {
   productId: string;
@@ -9,9 +10,10 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ productId, product }) => {
+  const dispatch = useDispatch(); // Get the dispatch function from Redux
   const [open, setOpen] = useState<boolean>(false);
   const [values, setValues] = useState({
-    id: "", // Change the type of the ID field to string
+    id: "",
     title: "",
     description: "",
     images: [] as string[],
@@ -22,34 +24,38 @@ const EditProduct: React.FC<EditProductProps> = ({ productId, product }) => {
     amount: "",
   });
 
+  useEffect(() => {
+    const storedProduct = localStorage.getItem("editedProduct");
+    if (storedProduct) {
+      setValues(JSON.parse(storedProduct));
+      setOpen(true);
+    }
+  }, []);
+
   const fetchProduct = async (productId: string) => {
     try {
       const token = localStorage.getItem("token");
-
-      // const response = await axios.get(
-      //   `http://localhost:8080/product/${productId}`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
-
-      // const productData = response.data; // Adjust this based on the API response structure
-
+      const response = await axios.get(
+        `http://localhost:8080/product/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const productData = response.data;
       setValues({
         id: productId,
-        title: product.title,
-        description: product.description,
-        images: product.images,
-        brand: product.brand,
-        category: product.category,
-        price: product.price,
-        rating: product.rating,
-        amount: product.amount,
+        title: productData.title,
+        description: productData.description,
+        images: productData.images,
+        brand: productData.brand,
+        category: productData.category,
+        price: productData.price,
+        rating: productData.rating,
+        amount: productData.amount,
       });
-
-      setOpen(true); // Open the dialog after fetching the product
+      setOpen(true);
     } catch (error) {
       console.log("Error fetching product data", error);
     }
@@ -61,6 +67,7 @@ const EditProduct: React.FC<EditProductProps> = ({ productId, product }) => {
 
   const handleClose = () => {
     setOpen(false);
+    localStorage.removeItem("editedProduct");
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,25 +82,21 @@ const EditProduct: React.FC<EditProductProps> = ({ productId, product }) => {
     try {
       const token = localStorage.getItem("token");
       const { id, ...editedProduct } = values;
-
-      console.log("Request URL:", `http://localhost:8080/product/${id}`);
-      console.log("Request Body:", editedProduct);
-
-      const response = await fetch(`http://localhost:8080/product/${id}`, {
-        method: "PUT",
+      await axios.put(`http://localhost:8080/product/${id}`, values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ id, ...editedProduct }),
       });
 
-      console.log("Response:", response);
-      const data = await response.json();
-      console.log("Response Data:", data);
+      const updatedProduct = {
+        // id: productId, // Use the `productId` from the props
+        ...values,
+      };
 
-      // Fetch the updated product data
-      await fetchProduct(id);
+      dispatch(updateProduct(updatedProduct)); // Dispatch the updateProduct action
+
+      localStorage.setItem("editedProduct", JSON.stringify(values));
       handleClose();
     } catch (error) {
       console.log("Error editing product", error);

@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { loadSearchResult } from "../../utils/ajax";
 import { saveSearchResult } from "../../pages/Home/redux/actions";
 import { Link } from "react-router-dom";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
+import styled from "@emotion/styled";
 
 const SearchContainer = () => {
   const dispatch = useAppDispatch();
@@ -53,20 +54,21 @@ const SearchContainer = () => {
         position: "absolute",
         display: "flex",
         flexDirection: "column",
-        left: "40%",
-        width: "350px",
-        top: "70px",
+        left: "30%",
+        width: "600px",
+        top: "35px",
         zIndex: "3",
         height: "10px",
       }}
     >
       <TextField
-        sx={{ height: "10px" }}
         type="text"
+        size="small"
         placeholder="ძიება..."
         value={input}
         onChange={handleInputChange}
       />
+
       {debouncedInput && (
         <Box
           sx={{
@@ -75,22 +77,33 @@ const SearchContainer = () => {
             flexDirection: "column",
             gap: "20px",
             backgroundColor: "white",
-            height: "300px",
-            // position: "absolute",
+            height: "450px",
+            position: "absolute",
+            top: "42px",
+            borderBottomLeftRadius: "12px",
+            borderBottomRightRadius: "12px",
+            borderLeft: "0.5px solid grey",
+            borderRight: "0.5px solid grey",
+            borderBottom: "0.5px solid grey",
+            width: "100%",
+            p: 2,
+            zIndex: "8",
           }}
         >
           {searchResult.map((product: ProductItem) => (
             <Box
               sx={{
                 display: "flex",
-                height: "80px",
-                marginTop: "55px",
-                backgroundColor: "white",
+                height: "50px",
+                // marginTop: "55px",
+                zIndex: "8",
+                backgroundColor: "#fff",
               }}
               key={product.id}
             >
               <img height="50px" src={product.images[1]} alt="" />
               <Link to={`productdetail/${product.id}`}>{product.title}</Link>
+              <Typography>{product.price}</Typography>
             </Box>
           ))}
         </Box>

@@ -58,6 +58,7 @@ const Login = () => {
           localStorage.setItem("token", data.AccessToken);
           localStorage.setItem("User", JSON.stringify(data.User));
           setIsAuthenticated(true); // Set the authentication status to true
+          window.location.reload(); // Reload the page
         } else {
           console.log("status", res.status);
         }
@@ -77,6 +78,8 @@ const Login = () => {
     setIsAuthenticated(false); // Set the authentication status to false
     localStorage.removeItem("token");
     localStorage.removeItem("User");
+    navigate("/");
+    window.location.reload(); // Reload the page
   };
 
   const handleShowProfile = () => {
