@@ -1,11 +1,33 @@
 import React, { useRef } from "react";
-import { Box, ButtonBase, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Box, ButtonBase, Typography } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+
+import sony from "../../images/brand-img/sony-brand.png";
+import jbl from "../../images/brand-img/brand-jbl.png";
+import google from "../../images/brand-img/brand-google.png";
+import apple from "../../images/brand-img/brand-apple.png";
+import canon from "../../images/brand-img/brand-canon.png";
+import xiaomi from "../../images/brand-img/brand-xiaomi.png";
+import dyson from "../../images/brand-img/brand-dyson.png";
+import { CarouselButton } from "./BrandCarousel.Styles";
+
+const brandData = [
+  { name: "Sony", link: "/brand/sony", image: sony },
+  { name: "JBL", link: "/brand/jbl", image: jbl },
+  { name: "Google", link: "/brand/google", image: google },
+  { name: "Apple", link: "/brand/apple", image: apple },
+  { name: "Canon", link: "/brand/canon", image: canon },
+  { name: "Xiaomi", link: "/brand/xiaomi", image: xiaomi },
+  { name: "Dyson", link: "/brand/dyson", image: dyson },
+];
 
 const BrandCarousel = () => {
+  const { t } = useTranslation();
   const sliderRef = useRef<Slider>(null);
 
   const sliderSettings = {
@@ -38,6 +60,7 @@ const BrandCarousel = () => {
       },
     ],
   };
+
   return (
     <Box>
       <Box sx={{ m: 5 }}>
@@ -49,82 +72,30 @@ const BrandCarousel = () => {
               padding: "0 10px",
             }}
           >
-            <Typography variant="h3">Brands</Typography>
-            <Box sx={{ display: "flex" }}>
-              <ButtonBase
-                style={{
-                  width: 35,
-                  height: 35,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginRight: 10,
-                  borderRadius: 7,
-                  boxShadow: "0 1px 3px rgb(0 0 0 / 10%)",
-                  cursor: "pointer",
-                }}
-                className="buttons"
-                onClick={() => sliderRef.current?.slickPrev()}
-              >
+            <Typography variant="h3">{t("global.brands")}</Typography>
+            <Box sx={{ display: "flex", gap: "5px" }}>
+              <CarouselButton onClick={() => sliderRef.current?.slickPrev()}>
                 <ArrowBackIos />
-              </ButtonBase>
-              <ButtonBase
-                style={{
-                  width: 35,
-                  height: 35,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: 7,
-                  boxShadow: "0 1px 3px rgb(0 0 0 / 10%)",
-                  cursor: "pointer",
-                }}
-                className="buttons"
-                onClick={() => sliderRef.current?.slickNext()}
-              >
+              </CarouselButton>
+              <CarouselButton onClick={() => sliderRef.current?.slickNext()}>
                 <ArrowForwardIos />
-              </ButtonBase>
+              </CarouselButton>
             </Box>
           </Box>
           <Box
             sx={{
               margin: "30px",
-              backgroundColor: "#fff", //"#ffc15",
+              backgroundColor: "#fff",
               gap: "10px",
               borderRadius: "15px",
             }}
           >
             <Slider ref={sliderRef} {...sliderSettings}>
-              <img
-                src={
-                  "https://img.zoommer.ge/zoommer-images/thumbs/0192345_sony.png"
-                }
-                alt=""
-              />
-              <img
-                src="https://img.zoommer.ge/zoommer-images/thumbs/0160609_jbl.png"
-                alt=""
-              />
-              <img
-                src="https://img.zoommer.ge/zoommer-images/thumbs/0125036_google.png"
-                alt=""
-              />
-              <img
-                src="https://img.zoommer.ge/zoommer-images/thumbs/0160158_boya.png"
-                alt=""
-              />
-              <img
-                src="https://img.zoommer.ge/zoommer-images/thumbs/0124554_apple.png"
-                alt=""
-              />
-              <img
-                src="https://img.zoommer.ge/zoommer-images/thumbs/0164271_canon.png"
-                alt=""
-              />
-              <img
-                src="https://img.zoommer.ge/zoommer-images/thumbs/0144108_xiaomi.png"
-                alt=""
-              />
+              {brandData.map((brand) => (
+                <Link key={brand.name} to={brand.link}>
+                  <img src={brand.image} alt={brand.name} />
+                </Link>
+              ))}
             </Slider>
           </Box>
         </Box>

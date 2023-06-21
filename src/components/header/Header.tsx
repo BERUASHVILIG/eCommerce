@@ -21,7 +21,7 @@ const Header = () => {
 
   const reloadPage = () => {
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
   return (
     <Box>
@@ -29,7 +29,7 @@ const Header = () => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          backgroundColor: "purple",
+          backgroundColor: "#7a1dff",
         }}
       >
         <Typography sx={{ ml: 23 }}>

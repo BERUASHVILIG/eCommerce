@@ -1,30 +1,45 @@
 import React, { useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hooks";
 import { updateCart } from "../../pages/Home/redux/actions";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { ArrowLeft, ArrowRight } from "@mui/icons-material";
-import "./ProductCard.scss";
 import { useTranslation } from "react-i18next";
 
+import { Box, Typography } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+
+// styling
+
+import {
+  ProductContainer,
+  AddCartButton,
+  SliderArrowLeft,
+  SliderArrowRight,
+  ProductTitle,
+} from "./ProductCart.Styles";
+
 const ProductCard = ({ product }: { product: ProductItem }) => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const dispatch = useAppDispatch();
+
   const [productImage, setProductImage] = useState(0);
 
   const handleAddToCart = () => {
-    dispatch(updateCart(product, 1)); // Adjust the quantity as needed
+    dispatch(updateCart(product, 1));
   };
 
-  const nextImage = (prop: any) => {
+  const handleOpenDetail = () => {
+    navigate(`/productdetail/${product.id}`);
+  };
+
+  const nextImage = () => {
     if (product.images && product.images.length > 0) {
       setProductImage((prev) => (prev + 1) % product.images.length);
     }
   };
 
-  const prevImage = (prop: any) => {
+  const prevImage = () => {
     if (product.images && product.images.length > 0) {
       setProductImage(
         (prev) => (prev - 1 + product.images.length) % product.images.length
@@ -33,42 +48,44 @@ const ProductCard = ({ product }: { product: ProductItem }) => {
   };
 
   return (
-    <Box className="product-container">
-      <Box className="product-images">
-        <ArrowLeft className="arrow" onClick={prevImage} />
+    <ProductContainer>
+      <SliderArrowLeft className="arrow" onClick={prevImage} />
+      <SliderArrowRight className="arrow" onClick={nextImage} />
+      <Box onClick={handleOpenDetail}>
         <img
-          className="product-image"
-          style={{ width: "157px", height: "157px" }}
+          style={{
+            width: "157px",
+            height: "157px",
+            display: "flex",
+            margin: "auto",
+          }}
           src={product.images[productImage]}
           alt={product.title}
         />
-        <ArrowRight className="arrow" onClick={nextImage} />
       </Box>
       <Box>
-        <Typography sx={{ height: "60px" }}>
-          <Link className="title" to={`/productdetail/${product.id}`}>
-            {product.title.length > 30
-              ? product.title.slice(0, 40) + "..."
-              : product.title}
-          </Link>
-        </Typography>
+        <ProductTitle onClick={handleOpenDetail} sx={{ height: "60px" }}>
+          {product.title.length > 30
+            ? product.title.slice(0, 40) + "..."
+            : product.title}
+        </ProductTitle>
         <Typography
           sx={{
-            color: "#ff5000",
+            color: "#7a1dff",
             fontWeight: "bold",
             fontSize: "1.2rem",
           }}
         >
           {parseFloat(product.price.toString()).toFixed(2)}₾
         </Typography>
-        <Button sx={{ cursor: "pointer", mt: 3 }} onClick={handleAddToCart}>
+        <AddCartButton onClick={handleAddToCart}>
           {t("global.addToCart")}
-          <span style={{ marginLeft: "5px" }}>
+          <Typography style={{ marginLeft: "5px" }}>
             <ShoppingCartOutlinedIcon />
-          </span>
-        </Button>
+          </Typography>
+        </AddCartButton>
       </Box>
-    </Box>
+    </ProductContainer>
   );
 };
 

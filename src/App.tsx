@@ -34,8 +34,6 @@ function App() {
   const decodedToken = token ? jwtDecode<CustomJwtPayload>(token) : {};
   const isAdmin = decodedToken.isAdmin;
 
-  console.log("admin", isAdmin);
-
   useEffect(() => {
     if (token && isAdmin && !isReloaded) {
       setIsReloaded(true);
@@ -70,7 +68,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
-      {/* <ScrollToTop /> */}
+      <ScrollToTop />
       <Footer />
     </Box>
   );

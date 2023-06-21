@@ -1,6 +1,8 @@
 import { Box, Button, Tooltip } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
+import whitUp from "../../../images/brand-img/white-up-icon.svg";
+
 const BacktoTop = () => {
   const [backtoTop, setBacktoTop] = useState(false);
   useEffect(() => {
@@ -31,28 +33,19 @@ const BacktoTop = () => {
               position: "fixed",
               width: "40px",
               height: "40px",
-              backgroundColor: "#ff5000",
-              border: "3px solid #ff5000",
+              backgroundColor: "#7a1dff",
+              border: "3px solid #7a1dff",
               borderRadius: "8px",
               right: "20px",
               bottom: "50px",
               fontSize: "50px",
               cursor: "pointer",
-
-              // clear: "both",
-              // backgroundColor: "#ff5000",
-              // float: "right",
-              // marginBottom: "7px",
-              // cursor: "pointer",
-              // color: "#fff",
-              // textAlign: "center",
-              // display: "flex",
             }}
           >
             <img
               style={{ width: "10px", margin: "0 auto" }}
-              src="https://zoommer.ge/themes/zoommer/assets/images/white_up.svg"
-              alt=""
+              src={whitUp}
+              alt="whiteUp"
             />
           </button>
         </Tooltip>

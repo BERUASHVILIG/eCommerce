@@ -103,8 +103,6 @@ const Login = () => {
   const decodedToken = token ? jwtDecode<CustomJwtPayload>(token) : {};
   const isAdmin = decodedToken.isAdmin;
 
-  console.log("admin", isAdmin);
-
   const handleAdminShow = () => {
     useEffect(() => {
       if (token && isAdmin && !isReloaded) {

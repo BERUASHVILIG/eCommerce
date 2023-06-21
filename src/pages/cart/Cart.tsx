@@ -1,10 +1,20 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../redux/hooks";
-import { Link } from "react-router-dom";
-import { Box, Paper, Typography, CardMedia, Button } from "@mui/material";
 import CartItemCard from "../../components/cartItemCard";
 
+import { Box, Paper, Typography, CardMedia, Button } from "@mui/material";
+
+import {
+  CartContainer,
+  Cartitems,
+  BuyContainer,
+  CheckoutButton,
+} from "./Cart.Styles";
+
 const Cart = () => {
+  const { t } = useTranslation();
+
   const { cartItems }: GlobalState = useAppSelector(
     (state) => state.homeReducer
   );
@@ -31,6 +41,7 @@ const Cart = () => {
     (total, item) => total + item.product.price * item.quantity,
     0
   );
+
   const calculateTotalSum = (cartItems: CartItem[]): number => {
     if (cartItems.length > 0) {
       const totalSum =
@@ -48,22 +59,11 @@ const Cart = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "grid", gridTemplateColumns: "70% 25%" }}>
-        <Paper
-          square
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            gap: "40px",
-            m: 3,
-            p: 2,
-          }}
-        >
-          <Typography>Cart</Typography>
+      <CartContainer>
+        <Cartitems square>
+          <Typography>{t("global.cart")}</Typography>
           {cartItems.length === 0 ? (
-            <Typography>There are no items in the cart.</Typography>
+            <Typography>{t("global.emptyCart")}</Typography>
           ) : (
             cartItems.map((item: CartItem) => {
               if (item.quantity > 0) {
@@ -79,34 +79,37 @@ const Cart = () => {
               return null;
             })
           )}
-        </Paper>
-        <Box>
+        </Cartitems>
+        <BuyContainer>
           <Paper square sx={{ p: 2, m: 3, width: "100%" }}>
             <Box>
-              <Typography variant="h4">ჯამი</Typography>
+              <Typography
+                sx={{ fontWeight: "bold", color: "#7a1dff" }}
+                variant="h4"
+              >
+                {t("global.sum")}
+              </Typography>
               <Box sx={{ mt: 2 }}>
                 <Typography>
-                  სულ თანხა:
+                  {t("global.totalMoney")}
                   {parseFloat(totalPrice.toString()).toFixed(2)}₾
                 </Typography>
-                <Typography>მიტანის სერვისი:10₾</Typography>
-                <Typography>
-                  ჯამი:
-                  {parseFloat(totalSum.toString()).toFixed(2)}₾
+                <Typography>{t("global.delivery")}:10₾</Typography>
+                <Typography sx={{ fontWeight: "bold", color: "#7a1dff" }}>
+                  {t("global.sum")}:{parseFloat(totalSum.toString()).toFixed(2)}
+                  ₾
                 </Typography>
               </Box>
             </Box>
-            <Button
+            <CheckoutButton
               onClick={handleCheckout}
               sx={{ mt: 3, width: "100%" }}
-              color="warning"
-              variant="contained"
             >
-              Checkout
-            </Button>
+              {t("global.checkout")}
+            </CheckoutButton>
           </Paper>
-        </Box>
-      </Box>
+        </BuyContainer>
+      </CartContainer>
     </Box>
   );
 };

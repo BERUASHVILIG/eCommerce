@@ -1,22 +1,32 @@
 import React, { useEffect } from "react";
-import { saveProducts, setPage, setTotalProducts } from "./redux/actions";
-import { getAllProducts } from "../../utils/ajax";
+import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { saveProducts, setPage, setTotalProducts } from "./redux/actions";
+import { getFinalProject } from "../../utils/services/checkout";
+import { getAllProducts } from "../../utils/ajax";
+
 import ProductCard from "../../components/productCard";
-import { Box, Button, Typography } from "@mui/material";
-import BreadCrumbs from "../../components/breadCrumbs";
+import BrandCarousel from "../../components/brandCarousel";
 import Sliderr from "../../components/slider";
 
-import { getFinalProject } from "../../utils/services/checkout";
+import { Box, Button, Typography } from "@mui/material";
+import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 
-import "./Home.scss";
-import BrandCarousel from "../../components/brandCarousel";
+import {
+  ProductsContainer,
+  ProductsContainerTitle,
+  LoadMoreButton,
+  LoadMoreButtonWrapper,
+} from "./Home.Styles";
 
 const Home = () => {
-  const dispatch = useAppDispatch();
   const { products, page, totalProducts }: GlobalState = useAppSelector(
     (state) => state.homeReducer
   );
+
+  const { t } = useTranslation();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -49,15 +59,23 @@ const Home = () => {
   return (
     <Box>
       <Sliderr />
-      <Typography>Hot Offers</Typography>
-      <Box className="products-container">
+      <ProductsContainerTitle>{t("global.hotOffers")}</ProductsContainerTitle>
+      <ProductsContainer>
         {products.map((product) => {
           return <ProductCard key={product.id} product={product} />;
         })}
+      </ProductsContainer>
+      <LoadMoreButtonWrapper>
         {products.length < totalProducts && (
-          <Button onClick={handleLoadMore}>Load more</Button>
+          <LoadMoreButton onClick={handleLoadMore}>
+            Show More
+            <Typography sx={{ display: "block" }}>
+              <KeyboardArrowDownSharpIcon />
+            </Typography>
+          </LoadMoreButton>
         )}
-      </Box>
+      </LoadMoreButtonWrapper>
+      {/* </ProductsContainer> */}
       <BrandCarousel />
     </Box>
   );

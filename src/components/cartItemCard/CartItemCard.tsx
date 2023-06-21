@@ -1,11 +1,19 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Box, Typography, Button, Paper, CardMedia } from "@mui/material";
 import { useAppDispatch } from "../../redux/hooks";
 import {
   decreaseQuantity,
   increaseQuantity,
 } from "../../pages/Home/redux/actions";
+
+import { Typography, Button } from "@mui/material";
+
+import {
+  CartItem,
+  CartItemContainer,
+  ProductImage,
+} from "./CartItemCart.Styles";
 
 const CartItemCard = ({
   item,
@@ -15,6 +23,7 @@ const CartItemCard = ({
   totalPrice: number;
 }) => {
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const handleIncreaseQuantity = (item: CartItem) => {
     dispatch(increaseQuantity(item));
@@ -25,47 +34,27 @@ const CartItemCard = ({
   };
 
   return (
-    <Box
-      key={item.product.id}
-      sx={{
-        display: "flex",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        gap: "40px",
-      }}
-    >
-      <Paper
-        sx={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          gap: "25px",
-          width: "550px",
-          p: 2,
-        }}
-      >
-        <CardMedia
-          component="img"
-          alt="Product Image"
-          height="60"
-          sx={{ width: "100px" }}
-          image={item.product.images[0]}
-        />
+    <CartItemContainer key={item.product.id}>
+      <CartItem>
+        <ProductImage image={item.product.images[0]} />
         <Link to={`/productdetail/${item.product.id}`}>
-          {item.product.title}
+          {item.product.title.length > 30
+            ? item.product.title.slice(0, 15) + "..."
+            : item.product.title}
         </Link>
         <Button onClick={() => handleIncreaseQuantity(item)}>+</Button>
         <Typography>{item.quantity}</Typography>
         <Button onClick={() => handleDecreaseQuantity(item)}>-</Button>
         <Typography>
-          Price:
-          {parseFloat(item.product.price.toString()).toFixed(2)} ₾
+          <Typography sx={{ display: "block" }}>{t("global.price")}</Typography>
+          {parseFloat(item.product.price.toString()).toFixed(2)}₾
         </Typography>
         <Typography>
-          Total Price: {parseFloat(totalPrice.toString()).toFixed(2)}₾
+          {t("global.totalPrice")}{" "}
+          {parseFloat(totalPrice.toString()).toFixed(2)}₾
         </Typography>
-      </Paper>
-    </Box>
+      </CartItem>
+    </CartItemContainer>
   );
 };
 
