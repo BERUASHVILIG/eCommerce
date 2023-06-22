@@ -4,26 +4,18 @@ import { loadSearchResult } from "../../utils/ajax";
 import { saveSearchResult } from "../../pages/Home/redux/actions";
 import { Link } from "react-router-dom";
 import { Box, TextField, Typography } from "@mui/material";
-import styled from "@emotion/styled";
+
+import useDebounce from "../../utils/hooks";
+
+import { SearchField, SearchingContainer } from "./SearchContainer.Styles";
 
 const SearchContainer = () => {
   const dispatch = useAppDispatch();
   const { searchResult }: GlobalState = useAppSelector(
     (state) => state.homeReducer
   );
-
   const [input, setInput] = useState<string>("");
-  const [debouncedInput, setDebouncedInput] = useState<string>("");
-
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      setDebouncedInput(input);
-    }, 300);
-
-    return () => {
-      clearTimeout(delay);
-    };
-  }, [input]);
+  const debouncedValue = useDebounce<string>(input, 1000);
 
   useEffect(() => {
     const fetchSearchProduct = async (value: string) => {
@@ -41,28 +33,16 @@ const SearchContainer = () => {
         console.log(error);
       }
     };
-    fetchSearchProduct(debouncedInput);
-  }, [debouncedInput, dispatch]);
+    fetchSearchProduct(debouncedValue);
+  }, [debouncedValue, dispatch]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
 
   return (
-    <Box
-      sx={{
-        position: "absolute",
-        display: "flex",
-        flexDirection: "column",
-        left: "30%",
-        width: "600px",
-        top: "35px",
-        zIndex: "3",
-        height: "10px",
-        // backgroundColor: "white",
-      }}
-    >
-      <TextField
+    <SearchingContainer>
+      <SearchField
         type="text"
         size="small"
         placeholder="ძიება..."
@@ -71,7 +51,7 @@ const SearchContainer = () => {
         onChange={handleInputChange}
       />
 
-      {debouncedInput && (
+      {debouncedValue && (
         <Box
           sx={{
             display: "flex",
@@ -97,20 +77,25 @@ const SearchContainer = () => {
               sx={{
                 display: "flex",
                 height: "50px",
-                // marginTop: "55px",
                 zIndex: "8",
                 backgroundColor: "#fff",
               }}
               key={product.id}
             >
               <img height="50px" src={product.images[1]} alt="" />
-              <Link to={`productdetail/${product.id}`}>{product.title}</Link>
-              <Typography>{product.price}</Typography>
+              <Link to={`productdetail/${product.id}`}>
+                {product.title.length > 30
+                  ? product.title.slice(0, 25) + "..."
+                  : product.title}
+              </Link>
+              <Typography sx={{ color: "#7a1dff", fontWeight: "bold" }}>
+                {parseFloat(product.price.toString()).toFixed(2)}₾
+              </Typography>
             </Box>
           ))}
         </Box>
       )}
-    </Box>
+    </SearchingContainer>
   );
 };
 

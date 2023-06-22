@@ -4,9 +4,6 @@ const bodyParser = require("body-parser");
 const stripe = require("stripe")(
   "sk_test_51LnUKJDM1jwCEz8OJG69szv032rIo4X0WrFMaXrqxu9g8fdohsL1y54JEUhFUKrqoBquVjN3AzpIFyrbN915bgcd00O5hqoGCJ"
 );
-// import { useNavigate } from "react-router-dom";
-
-// const navigate = useNavigate();
 
 // Middleware
 const app = express();
@@ -45,8 +42,6 @@ app.post("/checkout", async (req, res) => {
       cancel_url: "http://localhost:5173/cart",
     });
 
-    // res.status(200).json({ sessionId: session.id })
-
     res.send(
       JSON.stringify({
         url: session.url,
@@ -57,8 +52,6 @@ app.post("/checkout", async (req, res) => {
     res.status(500);
     res.status(500).json({ error: error.message });
     console.log({ error: error.message });
-
-    //   .json({ error: "An error occurred while creating the checkout session" });
   }
 });
 

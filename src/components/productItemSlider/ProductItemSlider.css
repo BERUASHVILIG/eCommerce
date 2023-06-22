@@ -14,7 +14,7 @@
   background: blue;
 }
 .buttons {
-  background: orangered !important;
+  background: purple !important;
   color: white !important;
   transition: 700ms;
 }

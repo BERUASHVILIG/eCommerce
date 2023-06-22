@@ -7,15 +7,21 @@
     "addToCart": "Add To Cart",
     "hotOffers": "Hot Offers",
     "navigation": "Navigation",
-    "signIn": "SignIn",
-    "signUp": "signUp",
+    "signIn": "Sign In",
+    "signUp": "sign Up",
     "price": "price",
     "totalPrice": "Total Price",
     "emptyCart": "There are no items in the cart",
     "sum": "Sum",
     "totalMoney": "Total Sum:",
     "delivery": "Delivery",
-    "checkout": "Checkout"
+    "checkout": "Checkout",
+    "profile": "Profile",
+    "logout": "Logout",
+    "cencel": "Cencel",
+    "contact": "Contact",
+    "description": "Description",
+    "goBack": "Go Back"
   },
   "ge": {
     "hotline": "ცხელი ხაზი",
@@ -33,6 +39,12 @@
     "sum": "ჯამი",
     "totalMoney": "სულ თანხა:",
     "delivery": "მიტანის სერვისი",
-    "checkout": "გადახდა"
+    "checkout": "გადახდა",
+    "profile": "პროფილი",
+    "logout": "გამოსვლა",
+    "cencel": "გაუქმება",
+    "contact": "კონქატები",
+    "description": "აღწერა",
+    "goBack": "უკან დაბრუნება"
   }
 }

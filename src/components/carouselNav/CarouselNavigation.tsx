@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Container, List, ListItem, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import Brand from "../../pages/brand";
-import "./CarouselNavigation.scss";
+import "./CarouselNavigation.css";
 import { useTranslation } from "react-i18next";
 
 const CarouselNavigation = () => {
@@ -34,7 +34,13 @@ const CarouselNavigation = () => {
           width: "227px",
         }}
       >
-        <Typography sx={{ backgroundColor: "#5e35b1" }}>
+        <Typography
+          sx={{
+            backgroundColor: "#5e35b1",
+            color: "white",
+            fontWeight: "bold",
+          }}
+        >
           {t("global.brands")}
         </Typography>
         {brands.map((brand) => (

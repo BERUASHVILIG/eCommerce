@@ -10,7 +10,7 @@ import { Box, ButtonBase } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import ProductCard from "../productCard";
 
-import "./ProductItemSlider.scss";
+import "./ProductItemSlider.css";
 
 const ProductItemSlider = ({ title }: { title: string }) => {
   const dispatch = useAppDispatch();

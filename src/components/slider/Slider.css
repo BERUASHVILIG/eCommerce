@@ -26,7 +26,7 @@
 .arrow-next:hover,
 .arrow-back:hover {
   color: black;
-  background-color: orange;
+  background-color: #7a1dff;
   padding: 5px;
   border-radius: 8px;
   scale: 1.5;

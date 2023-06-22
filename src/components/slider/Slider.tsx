@@ -4,7 +4,7 @@ import { loadSliderProducts } from "../../utils/ajax";
 import { saveSliderProducts } from "../../pages/Home/redux/actions";
 import { Link } from "react-router-dom";
 
-import "./Slider.scss";
+import "./Slider.css";
 
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import { Box } from "@mui/material";

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleProduct } from "../../utils/ajax";
 import { saveProduct, updateCart } from "../Home/redux/actions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
-import "./ProductItem.scss";
+import "./ProductItem.css";
 
 import {
   Box,
@@ -20,6 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { red } from "@mui/material/colors";
 
 const ProductItem = () => {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -60,8 +62,11 @@ const ProductItem = () => {
     <Box>
       <Paper sx={{ mt: 3, p: 2, m: 5 }}>
         <Box key={product?.id}>
-          <Button sx={{ float: "right" }} onClick={handleBackHome}>
-            Back Home
+          <Button
+            sx={{ float: "right", backgroundColor: "#7a1dff", color: "#fff" }}
+            onClick={handleBackHome}
+          >
+            {t("global.goBack")}
           </Button>
           <Box
             className="product-detail"
@@ -85,24 +90,48 @@ const ProductItem = () => {
               </Paper>
             )}
             <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
-              <Typography variant="h6">{product?.brand}</Typography>
-              <Typography variant="h6">{product?.title}</Typography>
+              {/* <Typography variant="h6">{product?.brand}</Typography> */}
+              <Typography variant="h6">
+                {product.title.length > 30
+                  ? product.title.slice(0, 40) + "..."
+                  : product.title}
+              </Typography>
               <Typography>
                 {parseFloat(product?.price.toString()).toFixed(2)}₾
               </Typography>
-              <Button onClick={handleAddToCart}>Add to cart</Button>
-              <Box>
-                <Button onClick={() => handleChangeColor("black")}>
+              <Button
+                sx={{
+                  backgroundColor: "#f1e8ff",
+                  color: "#7a1dff",
+                  fontWeight: "bold",
+                }}
+                onClick={handleAddToCart}
+              >
+                {t("global.addToCart")}
+              </Button>
+              <Box sx={{ display: "flex", gap: "2px", mt: 1 }}>
+                <Button
+                  sx={{ backgroundColor: "black", color: "black" }}
+                  onClick={() => handleChangeColor("black")}
+                >
                   black
                 </Button>
-                <Button onClick={() => handleChangeColor("green")}>
+                <Button
+                  sx={{ backgroundColor: "green", color: "green" }}
+                  onClick={() => handleChangeColor("green")}
+                >
                   green
                 </Button>
-                <Button onClick={() => handleChangeColor("red")}>red</Button>
+                <Button
+                  sx={{ backgroundColor: "red", color: "red" }}
+                  onClick={() => handleChangeColor("red")}
+                >
+                  red
+                </Button>
               </Box>
               <Accordion sx={{ mt: 3, ml: 10 }}>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>Description</Typography>
+                  <Typography>{t("global.description")}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography sx={{ fontSize: "12px" }}>

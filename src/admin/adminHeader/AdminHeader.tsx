@@ -2,11 +2,12 @@ import React from "react";
 import logo from "../../images/ecomlogo-removebg-preview.png";
 
 import Login from "../../components/login";
+import { Box, Typography } from "@mui/material";
 
 const AdminHeader = () => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         justifyContent: "space-between",
         backgroundColor: "#fff", //"#8080b2",
@@ -14,9 +15,9 @@ const AdminHeader = () => {
       }}
     >
       <img style={{ marginTop: "3px" }} src={logo} alt="" />
-      <h1>Header</h1>
+      <Typography variant="h4"> Admin</Typography>
       <Login />
-    </div>
+    </Box>
   );
 };
 

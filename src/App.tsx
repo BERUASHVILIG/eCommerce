@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import "./App.scss";
+import "./App.css";
 import Home from "./pages/Home";
 import { Routes, Route, useLocation } from "react-router-dom";
 import ProductItem from "./pages/productItem";
@@ -18,6 +18,7 @@ import jwtDecode, { JwtPayload } from "jwt-decode";
 import AdminHeader from "./admin/adminHeader";
 import AdminFooter from "./admin/adminFooter";
 import ScrollToTop from "./components/subComponents/scroll/ScrollToTop";
+import Contact from "./pages/contact";
 
 interface CustomJwtPayload extends JwtPayload {
   isAdmin?: boolean;
@@ -67,6 +68,7 @@ function App() {
         <Route path="/user" element={<User />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
       <ScrollToTop />
       <Footer />

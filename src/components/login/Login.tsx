@@ -17,7 +17,17 @@ import { Link, useNavigate } from "react-router-dom";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { Token } from "@mui/icons-material";
 
-import loginLogo from "../../images/login image2.png";
+import loginLogo from "../../images/login_image2-removebg-preview.png";
+import { useTranslation } from "react-i18next";
+
+import {
+  MainLogin,
+  LoginContainer,
+  LoginTextFields,
+  LoginImage,
+  LoginSubmit,
+  LoginCencel,
+} from "./Login.Styles";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,6 +44,7 @@ interface CustomJwtPayload extends JwtPayload {
 
 const Login = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [open, setOpen] = useState<boolean>(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [showSettings, setShowSettings] = useState<boolean>(false);
@@ -115,9 +126,12 @@ const Login = () => {
   return (
     <Box>
       {isAuthenticated ? (
-        // Render the authenticated settings menu
         <Box sx={{ position: "relative" }}>
-          <Button variant="contained" onClick={handleToggleSettings}>
+          <Button
+            sx={{ backgroundColor: "purple" }}
+            variant="contained"
+            onClick={handleToggleSettings}
+          >
             <AccountCircleIcon />
           </Button>
           {showSettings && (
@@ -135,32 +149,33 @@ const Login = () => {
             >
               <MenuItem>
                 <Typography color="success" onClick={handleLogout}>
-                  Logout
+                  {t("global.logout")}
                 </Typography>
               </MenuItem>
               <MenuItem>
                 <Typography color="success" onClick={handleShowProfile}>
-                  Profile
+                  {t("global.profile")}
                 </Typography>
-              </MenuItem>
-              <MenuItem>
-                <Typography color="success">Settinges</Typography>
               </MenuItem>
             </Box>
           )}
         </Box>
       ) : (
         // Render the login button and dialog
-        <>
-          <Button variant="contained" onClick={handleOpen}>
-            Login
-          </Button>
+        <Box>
+          <MainLogin
+            // sx={{ backgroundColor: "purple" }}
+            variant="contained"
+            onClick={handleOpen}
+          >
+            {t("global.signIn")}
+          </MainLogin>
           <Dialog
             TransitionComponent={Transition}
             open={open}
             onClose={handleOpen}
           >
-            <DialogTitle>Login</DialogTitle>
+            <DialogTitle>{t("global.signIn")}</DialogTitle>
             <DialogContent
               sx={{
                 display: "flex",
@@ -169,41 +184,53 @@ const Login = () => {
                 gap: "30px",
               }}
             >
-              <img src={loginLogo} alt="" />
-              <Box>
-                <TextField
-                  id="email"
-                  name="email"
-                  label="Email"
-                  margin="dense"
-                  value={values.email}
-                  onChange={handleChange}
-                  fullWidth
-                />
-                <TextField
-                  id="password"
-                  name="password"
-                  label="password"
-                  margin="dense"
-                  value={values.password}
-                  onChange={handleChange}
-                  fullWidth
-                />
-                <Box>
-                  <Button onClick={handleOpen}>Cancel</Button>
-                  <Button
-                    onClick={() => {
-                      submitForm();
-                      handleAdminShow();
+              <LoginContainer>
+                <LoginImage>
+                  <img src={loginLogo} alt="" />
+                </LoginImage>
+                <LoginTextFields>
+                  <TextField
+                    id="email"
+                    name="email"
+                    label="Email"
+                    margin="dense"
+                    value={values.email}
+                    onChange={handleChange}
+                    fullWidth
+                  />
+                  <TextField
+                    id="password"
+                    name="password"
+                    label="password"
+                    margin="dense"
+                    value={values.password}
+                    onChange={handleChange}
+                    fullWidth
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      gap: "10px",
                     }}
                   >
-                    Login
-                  </Button>
-                </Box>
-              </Box>
+                    <LoginCencel onClick={handleOpen}>
+                      {t("global.cencel")}
+                    </LoginCencel>
+                    <LoginSubmit
+                      onClick={() => {
+                        submitForm();
+                        handleAdminShow();
+                      }}
+                    >
+                      {t("global.signIn")}
+                    </LoginSubmit>
+                  </Box>
+                </LoginTextFields>
+              </LoginContainer>
             </DialogContent>
           </Dialog>
-        </>
+        </Box>
       )}
     </Box>
   );
