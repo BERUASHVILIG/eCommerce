@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import jwtDecode from "jwt-decode";
+
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
 
 type UserInfo = {
   id: string;
@@ -11,7 +12,7 @@ type UserInfo = {
   lastName: string;
   email: string;
   phoneNumber: string;
-  password: string;
+  password?: string;
 };
 
 const validationSchema = Yup.object().shape({
@@ -23,7 +24,7 @@ const validationSchema = Yup.object().shape({
 
 const User = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<UserInfo[]>([]);
+  const [user, setUser] = useState<UserInfo | []>([]);
   const [editUser, setEditUser] = useState<boolean>(false);
 
   useEffect(() => {
@@ -87,15 +88,27 @@ const User = () => {
   return (
     <Box>
       {!editUser ? (
-        <Box>
-          <Typography>ID: {user.id}</Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "auto",
+          }}
+        >
+          {/* <Typography>ID: {user.id}</Typography> */}
           <Typography>Email: {user.email}</Typography>
           <Typography>First Name: {user.firstName}</Typography>
           <Typography>Last Name: {user.lastName}</Typography>
           <Typography>Phone: {user.phoneNumber}</Typography>
           <Typography>password: {user.password}</Typography>
-
-          <Button onClick={handleEditUser}>Edit user</Button>
+          <Button
+            sx={{ backgroundColor: "#7a1dff", color: "white" }}
+            onClick={handleEditUser}
+          >
+            Edit user
+          </Button>
         </Box>
       ) : (
         <Formik
@@ -103,7 +116,16 @@ const User = () => {
           validationSchema={validationSchema}
           onSubmit={handleSaveUser}
         >
-          <Form>
+          <Form
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              justifyContent: "center",
+              alignItems: "center",
+              margin: "auto",
+            }}
+          >
             <div>
               <Field name="firstName">
                 {({ field, form }) => (
@@ -171,7 +193,7 @@ const User = () => {
                 )}
               </Field>
             </div>
-            <div>
+            {/* <div>
               <Field name="password">
                 {({ field, form }) => (
                   <TextField
@@ -186,10 +208,15 @@ const User = () => {
                   />
                 )}
               </Field>
-            </div>
+            </div> */}
 
-            <Button type="submit">Save</Button>
             <Button onClick={() => setEditUser(false)}>Cancel</Button>
+            <Button
+              sx={{ backgroundColor: "#7a1dff", color: "#fff" }}
+              type="submit"
+            >
+              Save
+            </Button>
           </Form>
         </Formik>
       )}

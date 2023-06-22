@@ -9,7 +9,7 @@ import ProductCard from "../../components/productCard";
 import BrandCarousel from "../../components/brandCarousel";
 import Sliderr from "../../components/slider";
 
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import KeyboardArrowDownSharpIcon from "@mui/icons-material/KeyboardArrowDownSharp";
 
 import {

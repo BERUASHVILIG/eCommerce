@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import "./App.css";
-import Home from "./pages/Home";
 import { Routes, Route, useLocation } from "react-router-dom";
+import jwtDecode, { JwtPayload } from "jwt-decode";
+
+import Home from "./pages/Home";
 import ProductItem from "./pages/productItem";
 import Header from "./components/header";
 import Cart from "./pages/cart";
 import BreadCrumbs from "./components/breadCrumbs";
-import { Box } from "@mui/material";
 import Footer from "./components/footer";
 import Admin from "./admin/Admin";
 import Brand from "./pages/brand";
 import Register from "./components/register";
 import Login from "./components/login";
 import User from "./pages/user";
-import jwtDecode, { JwtPayload } from "jwt-decode";
 import AdminHeader from "./admin/adminHeader";
 import AdminFooter from "./admin/adminFooter";
 import ScrollToTop from "./components/subComponents/scroll/ScrollToTop";
 import Contact from "./pages/contact";
+
+import "./App.css";
+import { Box } from "@mui/material";
 
 interface CustomJwtPayload extends JwtPayload {
   isAdmin?: boolean;

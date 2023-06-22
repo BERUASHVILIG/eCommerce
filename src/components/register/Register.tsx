@@ -66,7 +66,7 @@ const Register = () => {
       ),
   });
 
-  const { values, handleChange, submitForm, isSubmitting } =
+  const { values, handleChange, submitForm, isSubmitting, errors } =
     useFormik<UserRegister>({
       initialValues: {
         firstName: "",
@@ -150,6 +150,8 @@ const Register = () => {
                 type="text"
                 fullWidth
                 variant="outlined"
+                error={!!errors.firstName}
+                helperText={errors.firstName}
               />
               <TextField
                 autoFocus
@@ -162,6 +164,8 @@ const Register = () => {
                 type="text"
                 fullWidth
                 variant="outlined"
+                error={!!errors.lastName}
+                helperText={errors.lastName}
               />
               <TextField
                 autoFocus
@@ -174,6 +178,8 @@ const Register = () => {
                 type="text"
                 fullWidth
                 variant="outlined"
+                error={!!errors.phoneNumber}
+                helperText={errors.phoneNumber}
               />
               <TextField
                 autoFocus
@@ -186,6 +192,8 @@ const Register = () => {
                 type="email"
                 fullWidth
                 variant="outlined"
+                error={!!errors.email}
+                helperText={errors.email}
               />
               <TextField
                 autoFocus
@@ -198,6 +206,8 @@ const Register = () => {
                 type="password"
                 fullWidth
                 variant="outlined"
+                error={!!errors.password}
+                helperText={errors.password}
               />
             </DialogContent>
           </RegisterTextFields>

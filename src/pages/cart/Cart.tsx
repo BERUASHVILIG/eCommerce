@@ -18,25 +18,6 @@ const Cart = () => {
   const { cartItems }: GlobalState = useAppSelector(
     (state) => state.homeReducer
   );
-  console.log(cartItems);
-
-  // const handleCheckout = async () => {
-  //   await fetch("http://localhost:4000/checkout", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({ items: cartItems }),
-  //   })
-  //     .then((response) => {
-  //       return response.json();
-  //     })
-  //     .then((response) => {
-  //       if (response.url) {
-  //         window.location.assign(response.url); // Forwarding user to Stripe
-  //       }
-  //     });
-  // };
 
   const handleCheckout = async () => {
     const items = cartItems.map((item) => ({
@@ -47,22 +28,24 @@ const Cart = () => {
       quantity: item.quantity,
     }));
 
-    await fetch("http://localhost:4000/checkout", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ items }),
-    })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.url) {
-          window.location.assign(response.url); // Forwarding user to Stripe
-        }
+    if (localStorage.getItem("token")) {
+      await fetch("http://localhost:4000/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items }),
       })
-      .catch((error) => {
-        console.error("Error during checkout:", error);
-      });
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.url) {
+            window.location.assign(response.url);
+          }
+        })
+        .catch((error) => {
+          console.error("Error during checkout:", error);
+        });
+    }
   };
 
   const totalPrice = cartItems.reduce(

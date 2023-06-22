@@ -5,8 +5,11 @@ import { getSingleProduct } from "../../utils/ajax";
 import { saveProduct, updateCart } from "../Home/redux/actions";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
+import ProductItemSlider from "../../components/productItemSlider";
+
 import "./ProductItem.css";
 
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Box,
   Typography,
@@ -16,9 +19,6 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
-import ProductItemSlider from "../../components/productItemSlider";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { red } from "@mui/material/colors";
 
 const ProductItem = () => {
   const { t } = useTranslation();
@@ -28,7 +28,7 @@ const ProductItem = () => {
   const { product }: GlobalState = useAppSelector((state) => state.homeReducer);
 
   const handleAddToCart = () => {
-    dispatch(updateCart(product, 1)); // Adjust the quantity as needed
+    dispatch(updateCart(product, 1));
   };
 
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);

@@ -14,12 +14,6 @@ type GlobalState = {
   brandProducts: ProductItem[];
 };
 
-// type AdminState = {
-//   adminProducts: ProductItem[];
-//   product: AddProductItem;
-//   editProduct: EditProductItem;
-// };
-
 type CartItem = {
   product: ProductItem;
   quantity: number;

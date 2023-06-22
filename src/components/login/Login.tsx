@@ -197,8 +197,10 @@ const Login = () => {
                     value={values.email}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                   <TextField
+                    type="password"
                     id="password"
                     name="password"
                     label="password"
@@ -206,6 +208,7 @@ const Login = () => {
                     value={values.password}
                     onChange={handleChange}
                     fullWidth
+                    required
                   />
                   <Box
                     sx={{
