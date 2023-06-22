@@ -18,22 +18,50 @@ const Cart = () => {
   const { cartItems }: GlobalState = useAppSelector(
     (state) => state.homeReducer
   );
+  console.log(cartItems);
+
+  // const handleCheckout = async () => {
+  //   await fetch("http://localhost:4000/checkout", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ items: cartItems }),
+  //   })
+  //     .then((response) => {
+  //       return response.json();
+  //     })
+  //     .then((response) => {
+  //       if (response.url) {
+  //         window.location.assign(response.url); // Forwarding user to Stripe
+  //       }
+  //     });
+  // };
 
   const handleCheckout = async () => {
+    const items = cartItems.map((item) => ({
+      title: item.product.title,
+      description: item.product.description,
+      images: item.product.images,
+      price: item.product.price,
+      quantity: item.quantity,
+    }));
+
     await fetch("http://localhost:4000/checkout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ items: cartItems }),
+      body: JSON.stringify({ items }),
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((response) => {
         if (response.url) {
           window.location.assign(response.url); // Forwarding user to Stripe
         }
+      })
+      .catch((error) => {
+        console.error("Error during checkout:", error);
       });
   };
 

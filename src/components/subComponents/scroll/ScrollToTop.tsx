@@ -1,7 +1,6 @@
 import { Box, Button, Tooltip } from "@mui/material";
 import React, { useState, useEffect } from "react";
-
-import whitUp from "../../../images/brand-img/white-up-icon.svg";
+import KeyboardArrowUpSharpIcon from "@mui/icons-material/KeyboardArrowUpSharp";
 
 const BacktoTop = () => {
   const [backtoTop, setBacktoTop] = useState(false);
@@ -14,12 +13,14 @@ const BacktoTop = () => {
       }
     });
   }, []);
+
   const scrollUp = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+
   return (
     <Box>
       {backtoTop && (
@@ -42,11 +43,7 @@ const BacktoTop = () => {
               cursor: "pointer",
             }}
           >
-            <img
-              style={{ width: "10px", margin: "0 auto" }}
-              src={whitUp}
-              alt="whiteUp"
-            />
+            <KeyboardArrowUpSharpIcon style={{ color: "#ffffff" }} />
           </button>
         </Tooltip>
       )}

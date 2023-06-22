@@ -16,6 +16,6 @@ export const editProductInitial: EditProductItem = {
   brand: "",
   category: "",
   price: 0,
-  rating: 0,
-  amount: 0,
+  rating: "", //0,
+  amount: "", //0,
 };

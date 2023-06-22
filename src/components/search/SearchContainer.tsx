@@ -59,6 +59,7 @@ const SearchContainer = () => {
         top: "35px",
         zIndex: "3",
         height: "10px",
+        // backgroundColor: "white",
       }}
     >
       <TextField
@@ -66,6 +67,7 @@ const SearchContainer = () => {
         size="small"
         placeholder="ძიება..."
         value={input}
+        sx={{ backgroundColor: "white" }}
         onChange={handleInputChange}
       />
 

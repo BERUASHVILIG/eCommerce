@@ -45,12 +45,12 @@ const CartItemCard = ({
         <Button onClick={() => handleIncreaseQuantity(item)}>+</Button>
         <Typography>{item.quantity}</Typography>
         <Button onClick={() => handleDecreaseQuantity(item)}>-</Button>
-        <Typography>
-          <Typography sx={{ display: "block" }}>{t("global.price")}</Typography>
+        <Typography variant="body1">
+          {t("global.price")}:{" "}
           {parseFloat(item.product.price.toString()).toFixed(2)}₾
         </Typography>
-        <Typography>
-          {t("global.totalPrice")}{" "}
+        <Typography variant="body1">
+          {t("global.totalPrice")}:{" "}
           {parseFloat(totalPrice.toString()).toFixed(2)}₾
         </Typography>
       </CartItem>

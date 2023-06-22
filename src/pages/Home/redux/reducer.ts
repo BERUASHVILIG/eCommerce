@@ -164,7 +164,7 @@ import { productInitalState } from "../redux/initialState";
 import {
   addProductItemInitial,
   editProductInitial,
-} from "../../../admin/redux/initialState";
+} from "../../../admin/initialStateAdmin";
 
 // Load products from local storage if available
 const storedProducts = localStorage.getItem("products");

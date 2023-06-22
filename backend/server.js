@@ -4,6 +4,9 @@ const bodyParser = require("body-parser");
 const stripe = require("stripe")(
   "sk_test_51LnUKJDM1jwCEz8OJG69szv032rIo4X0WrFMaXrqxu9g8fdohsL1y54JEUhFUKrqoBquVjN3AzpIFyrbN915bgcd00O5hqoGCJ"
 );
+// import { useNavigate } from "react-router-dom";
+
+// const navigate = useNavigate();
 
 // Middleware
 const app = express();
@@ -16,6 +19,7 @@ app.use(express.json());
 app.post("/checkout", async (req, res) => {
   try {
     const { items } = req.body;
+    console.log("items", items);
 
     // Create a product in Stripe
     const lineItems = items.map((item) => ({
@@ -23,10 +27,11 @@ app.post("/checkout", async (req, res) => {
         currency: "usd",
         product_data: {
           name: item.title,
-          description: item.description,
+          description: item.brand,
           images: item.images,
         },
-        unit_amount: item.price * 100,
+        // unit_amount: item.price * 100,
+        unit_amount: Math.round(item.price * 100), // Convert to cents
       },
       quantity: item.quantity,
     }));
@@ -36,8 +41,8 @@ app.post("/checkout", async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: "http://localhost:3000/success",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: "http://localhost:5173/success",
+      cancel_url: "http://localhost:5173/cart",
     });
 
     // res.status(200).json({ sessionId: session.id })
@@ -49,9 +54,11 @@ app.post("/checkout", async (req, res) => {
     );
   } catch (error) {
     console.error("Error creating checkout session:", error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating the checkout session" });
+    res.status(500);
+    res.status(500).json({ error: error.message });
+    console.log({ error: error.message });
+
+    //   .json({ error: "An error occurred while creating the checkout session" });
   }
 });
 
